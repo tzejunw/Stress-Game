@@ -1,4 +1,4 @@
-Project Requirements
+<b>Project Requirements</b>
 Implement any card game with the following requirements:
 It should allow 2 or more players.
 
