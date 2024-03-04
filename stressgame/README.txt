@@ -13,3 +13,4 @@ the value of your card is one more or one less than the value of the card on top
 
 To play a card on one of the piles, press a card key and a pile key concurrently
 Example: (F + E) plays the right-most card to the right pile.
+updates on 4 
