@@ -1,0 +1,14 @@
+
+print and display game state
+implement keylistener
+
+implement playCard rules
+
+implement stackcard (lets not_) 
+
+make it detect when the draw pile is empty
+if the drawpile is empty, stop replacing the playerRow.
+When the player row is empty, game ends.
+
+Ai implementation:
+after a repaint, just make it try every possible move 
