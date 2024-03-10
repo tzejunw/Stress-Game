@@ -1,6 +1,7 @@
 public class App {
     public static void main(String[] args) {
-        Stress stress = new Stress();
+        menu mainmenu=new menu();
+        //Stress stress = new Stress();
     }
     
 }
