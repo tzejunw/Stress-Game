@@ -4,21 +4,34 @@ import java.awt.event.*;
 import java.util.*;
 import java.util.Random;
 import javax.swing.*;
+import javax.swing.Timer;
 
 public class Stress implements KeyListener {
 
     Set<Integer> pressedKeys = new HashSet<>();
+
+    Set<Integer> player2PressedKeys = new HashSet<>();
+
     // int[] pressedKeys = new int[2];
     // do i limit the size of the hash map?
 
     @Override
     public void keyPressed(KeyEvent e) {
-        pressedKeys.add(e.getKeyCode());
+        if (e.getKeyCode() == KeyEvent.VK_W || 
+            e.getKeyCode() == KeyEvent.VK_E || 
+            e.getKeyCode() == KeyEvent.VK_A || 
+            e.getKeyCode() == KeyEvent.VK_S ||
+            e.getKeyCode() == KeyEvent.VK_D ||
+            e.getKeyCode() == KeyEvent.VK_F) {
+
+            pressedKeys.add(e.getKeyCode());
+            }
+
         if (pressedKeys.size() == 2) {
             // Check for desired key combinations based on pressedKeys
             System.out.println("THIS IS PRESSED KEYS STORED");
             System.out.println(pressedKeys);
-            
+
             if (pressedKeys.contains(KeyEvent.VK_W) && pressedKeys.contains(KeyEvent.VK_E)) {
                 // Action for w + E combination
                 System.out.println("W + E was detected by the listener");
@@ -26,8 +39,8 @@ public class Stress implements KeyListener {
                 System.out.println(pileA);
             }
 
-            //stackCard calls
-            
+            // stackCard calls
+
             // playCard calls
             if (pressedKeys.contains(KeyEvent.VK_A) && pressedKeys.contains(KeyEvent.VK_W)) {
                 // Action for A + W combination
@@ -129,9 +142,12 @@ public class Stress implements KeyListener {
 
                 // draw/paint playerRow
                 for (int i = 0; i < playerRow.size(); i++) {
-                    Card card = playerRow.get(i).get(0);
-                    Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
-                    g.drawImage(cardImg, 75 + (cardWidth + 5) * i, 460, cardWidth, cardHeight, null);
+                    if (!(playerRow.get(i).isEmpty())) {
+                        Card card = playerRow.get(i).get(0);
+                        Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
+                        g.drawImage(cardImg, 75 + (cardWidth + 5) * i, 460, cardWidth, cardHeight, null);
+ 
+                    }
                 }
 
                 // draw/paint aiRow
@@ -173,14 +189,17 @@ public class Stress implements KeyListener {
         frame.add(gamePanel);
         gamePanel.repaint();
 
-        //tutorial says to leave this here
+        // Timer timer = new Timer(1000, e -> Stress.aiPlayGameTurn());
+        // timer.start();
+
+        // tutorial says to leave this here
         System.out.println("GAME PANEL WAS ADDED TO THE FRAME, repaint and paintcomponent");
     }
 
     public void startGame() {
-        // create deck, shuffle it, give the player half the deck.
+        // create deck, shuffle it, give each player half the deck.
         // init and fill up the initial player row with 4 cards
-        // initalise A and B from each of the player's draw pile's
+        // initalise pile A and pile B from each of the player's draw pile's
         buildDeck();
         // shuffleDeck();
 
@@ -198,7 +217,6 @@ public class Stress implements KeyListener {
         intialiseRow(aiRow, aiDrawPile);
 
         // piles
-
         pileA = new ArrayList<Card>();
         pileB = new ArrayList<Card>();
         flipOnPiles();
@@ -220,7 +238,7 @@ public class Stress implements KeyListener {
 
         System.out.println("PLAYER PLAYS A CARD TO PILE A");
 
-        playCard(playerRow, 3, pileA , playerDrawPile);
+        playCard(playerRow, 3, pileA, playerDrawPile);
         System.out.println("NEW PLAYER DRAW PILE");
         System.out.println(playerDrawPile);
         System.out.println("NEW PLAYER ROW");
@@ -293,42 +311,72 @@ public class Stress implements KeyListener {
         }
     }
 
+    public int getValueOfLastCardInStack(ArrayList<ArrayList<Card>> playerRow, int rowPosition) {
+        int stack_size = playerRow.get(rowPosition).size();
+        int stack_value = playerRow.get(rowPosition).get(stack_size - 1).getValue();
+        return stack_value;
+    }
+
+    public boolean isThereValidMove() {
+        // comparison between pile A and B and all visible cards
+        ArrayList<Integer> array = new ArrayList<Integer>();
+        for (int i = 0; i < 4; i++) {
+            array.add(getValueOfLastCardInStack(playerRow, i));
+        }
+        for (int i = 0; i < 4; i++) {
+            array.add(getValueOfLastCardInStack(aiRow, i));
+        }
+        for (int card_value : array) {
+            // check pile b
+        }
+        return false;
+    }
+
     public void flipOnPiles() {
         // just add last of playerDraw pile to pileA, aiDrawPile to pileB
         // if there are no moves
-        // get an int array of all the values in my row. 
+        // get an int array of all the values in my row.
         // loop to check if any possible move
 
         pileA.add(playerDrawPile.remove(playerDrawPile.size() - 1));
         pileB.add(aiDrawPile.remove(aiDrawPile.size() - 1));
     }
 
-    public void playCard(ArrayList<ArrayList<Card>> playerRow, int rowPosition, ArrayList<Card> pile, ArrayList<Card> drawpile) {
-        // given a position, clear the whole array stack and add each card to the back
-        // of the specified pileA/B
-
-        // if the value of the last card in inner array is one over or one below the last card in pile, then execute
+    public void playCard(ArrayList<ArrayList<Card>> playerRow, int rowPosition, ArrayList<Card> pile,
+            ArrayList<Card> drawpile) {
+        // given a position, transfer the last card in the array to the back of the
+        // specified pileA/B
+        // if the value of the last card in inner array is one over or one below the
+        // last card in pile, then execute
 
         // pile value
         int pile_value = pile.get(pile.size() - 1).getValue();
         int stack_size = playerRow.get(rowPosition).size();
         int stack_value = playerRow.get(rowPosition).get(stack_size - 1).getValue();
 
-        if (stack_value == (pile_value + 1) || stack_value == (pile_value - 1) || 
+        if (stack_value == (pile_value + 1) || stack_value == (pile_value - 1) ||
                 (stack_value == 14 && pile_value == 2) || (stack_value == 2 && pile_value == 14)) {
 
-            pile.addAll(playerRow.get(rowPosition));
-            playerRow.get(rowPosition).clear();
-    
-            // played card is replaced immediately from the BACK of the drawpile. if, theres still cards to draw
-            if (drawpile.size() != 0) {
-                playerRow.get(rowPosition).add(0, drawpile.remove(drawpile.size() - 1));
-            } 
-        }
+            pile.add(playerRow.get(rowPosition).remove(stack_size - 1));
 
+            // if stack is empty, and if theres still cards in drawpile,
+            // played card is replaced immediately from the BACK of the drawpile.
+            if (playerRow.get(rowPosition).isEmpty()) {
+                if (drawpile.size() != 0) {
+                    playerRow.get(rowPosition).add(0, drawpile.remove(drawpile.size() - 1));
+                }
+            }
+        }
+        if(checkWin() == 1) {
+            System.out.println("PLAYER 1 is the WINNERR");
+        } else if (checkWin() == 2){
+            System.out.println("PLAYER 2 is the WINNERRR");
+        } else {
+            System.out.println("No one has won yet");
+        }
     }
 
-    public void stackCards(ArrayList<Card> movingStack, ArrayList<Card> mainStack) { //lets not implement this
+    public void stackCards(ArrayList<Card> movingStack, ArrayList<Card> mainStack) { // lets not implement this
         // transfer the ALL cards from moving stack to back of main stack
         // if the back of moving stack is same as back of main stack
         int movingStackSize = movingStack.size();
@@ -336,7 +384,7 @@ public class Stress implements KeyListener {
         if (movingStack.get(movingStackSize - 1) == mainStack.get(mainStackSize - 1)) {
             mainStack.addAll(movingStack);
             movingStack.clear();
-    
+
             // moved row is replaced immediately from the back of the drawpile
             movingStack.add(0, playerDrawPile.remove(playerDrawPile.size() - 1));
         }
@@ -344,7 +392,8 @@ public class Stress implements KeyListener {
 
     public void callStress(int player) {
 
-        // if the value of the last cards in pileA and pileB are equal, then stress can be called
+        // if the value of the last cards in pileA and pileB are equal, then stress can
+        // be called
         // transfer pileA and pileB to the opponents drawpile
 
         int last_index_A = pileA.size() - 1;
@@ -363,14 +412,18 @@ public class Stress implements KeyListener {
             pileA.add(playerDrawPile.remove(playerDrawPile.size() - 1));
             pileB.add(aiDrawPile.remove(aiDrawPile.size() - 1));
             System.out.println("STRESS CALLED");
-            // after a stress call, the game should auto help to fill in any empty spaces in the row
+            // after a stress call, the game should auto help to fill in any empty spaces in
+            // the row
 
         }
         // what if the either drawpile is empty? implement it
-        // you call stress, and your drawpile is empty, the flip takes two cards from your opponents draw pile. 
+        // you call stress, and your drawpile is empty, the flip takes two cards from
+        // your opponents draw pile.
     }
+
     public boolean canCallStress() {
-        return pileA.size() > 0 && pileB.size() > 0 && pileA.get(pileA.size() - 1).getValue() == pileB.get(pileB.size() - 1).getValue();
+        return pileA.size() > 0 && pileB.size() > 0
+                && pileA.get(pileA.size() - 1).getValue() == pileB.get(pileB.size() - 1).getValue();
     }
 
     public void aiPlayGameTurn() {
@@ -387,4 +440,22 @@ public class Stress implements KeyListener {
         playCard(aiRow, 3, pileB, aiDrawPile);
     }
 
+    public int checkWin() {
+        // if drawpile empty and all rows empty
+
+        if (playerRow.get(0).isEmpty() &&
+                playerRow.get(1).isEmpty() &&
+                playerRow.get(2).isEmpty() &&
+                playerRow.get(3).isEmpty()) {
+            return 1;
+
+        } else if (aiRow.get(0).isEmpty() &&
+                aiRow.get(1).isEmpty() &&
+                aiRow.get(2).isEmpty() &&
+                aiRow.get(3).isEmpty()) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
 }
