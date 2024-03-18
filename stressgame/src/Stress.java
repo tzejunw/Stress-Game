@@ -2,7 +2,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-import java.util.Random;
+
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -50,6 +50,39 @@ public class Stress implements KeyListener {
             }
 
             // stackCard calls
+
+           
+            if (pressedKeys1.contains(KeyEvent.VK_A) && pressedKeys1.contains(KeyEvent.VK_S)) {
+                // 1,2
+                System.out.println("A + S was detected by the listener");
+                stackCards(playerRow, 1, 2);
+            }
+            if (pressedKeys1.contains(KeyEvent.VK_A) && pressedKeys1.contains(KeyEvent.VK_D)) {
+                // 1,3
+                System.out.println("A + D was detected by the listener");
+                stackCards(playerRow, 1, 3);
+            }
+            if (pressedKeys1.contains(KeyEvent.VK_A) && pressedKeys1.contains(KeyEvent.VK_F)) {
+                // 1,4
+                System.out.println("A + F was detected by the listener");
+                stackCards(playerRow, 1, 4);
+            }
+            if (pressedKeys1.contains(KeyEvent.VK_S) && pressedKeys1.contains(KeyEvent.VK_D)) {
+                // 2,3
+                System.out.println("S + D was detected by the listener");
+                stackCards(playerRow, 2, 3);
+            }
+            if (pressedKeys1.contains(KeyEvent.VK_S) && pressedKeys1.contains(KeyEvent.VK_F)) {
+                // 2,4
+                System.out.println("S + F was detected by the listener");
+                stackCards(playerRow, 2, 4);
+            }
+            if (pressedKeys1.contains(KeyEvent.VK_D) && pressedKeys1.contains(KeyEvent.VK_F)) {
+                // 3,4
+                System.out.println("D + F was detected by the listener");
+                stackCards(playerRow, 3, 4);
+            }
+
             // playCard calls
             if (pressedKeys1.contains(KeyEvent.VK_A) && pressedKeys1.contains(KeyEvent.VK_W)) {
                 // Action for A + W combination
@@ -175,27 +208,28 @@ public class Stress implements KeyListener {
         // Not used in this example
     }
 
-    // game attributes of stress
+    // Game attributes of Stress
     // deck and shuffling
     ArrayList<Card> deck;
     Random random = new Random();
 
-    // player
+    // Player Card Piles
     ArrayList<ArrayList<Card>> playerRow;
     ArrayList<Card> playerDrawPile;
 
-    // AI
+    // AI Card Piles
     ArrayList<ArrayList<Card>> aiRow;
     ArrayList<Card> aiDrawPile;
 
-    // center piles
+    // Center Card Piles
     ArrayList<Card> pileA;
     ArrayList<Card> pileB;
 
-    // window
+    // Window Size
     int boardWidth = 600;
     int boardHeight = 700;
 
+    // Size of cards
     int cardWidth = 110;
     int cardHeight = 154;
 
@@ -212,24 +246,31 @@ public class Stress implements KeyListener {
                 // ImageIcon(getClass().getResource("./cards/BACK.png")).getImage();
                 // g.drawImage(hiddenCardImg, 20, 20, cardWidth, cardHeight, null);
 
-                // draw/paint playerRow
+                // draw/paint playerRow (Player's cards)
                 for (int i = 0; i < playerRow.size(); i++) {
                     if (!(playerRow.get(i).isEmpty())) {
+                        // get the card in the playerRow ArrayList
                         Card card = playerRow.get(i).get(0);
+                        // used to get the relevant card image
                         Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
+                        // Draw the card image
                         g.drawImage(cardImg, 75 + (cardWidth + 5) * i, 460, cardWidth, cardHeight, null);
                     }
                 }
+
                 // draw/paint aiRow
                 for (int i = 0; i < aiRow.size(); i++) {
                     if (!(aiRow.get(i).isEmpty())) {
+                        // get the card in the aiRow ArrayList
                         Card card = aiRow.get(i).get(0);
+                        // used to get the relevant card image
                         Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
+                        // Draw the card image 
                         g.drawImage(cardImg, 75 + (cardWidth + 5) * i, 20, cardWidth, cardHeight, null);
                     }
                 }
 
-                // draw/paint piles. always print the last card in each pile
+                // Draw/paint piles. always print the last card in each pile
                 Card pileACard = pileA.get(pileA.size() - 1);
                 Image pileAImg = new ImageIcon(getClass().getResource(pileACard.getImagePath())).getImage();
                 g.drawImage(pileAImg, 150, 250, cardWidth, cardHeight, null);
@@ -274,7 +315,7 @@ public class Stress implements KeyListener {
         });
         timer.start();
 
-        // tutorial says to leave this here
+        
         System.out.println("GAME PANEL WAS ADDED TO THE FRAME, repaint and paintcomponent");
     }
 
@@ -283,7 +324,7 @@ public class Stress implements KeyListener {
         // init and fill up the initial player row with 4 cards
         // initalise pile A and pile B from each of the player's draw pile's
         buildDeck();
-        // shuffleDeck();
+        shuffleDeck();
 
         // player
         playerRow = new ArrayList<>();
@@ -350,6 +391,8 @@ public class Stress implements KeyListener {
     public void shuffleDeck() {
         for (int i = 0; i < deck.size(); i++) {
             int j = random.nextInt(deck.size());
+            // for checking if deck shuffles
+            // System.out.println("SHUFFLE DECK: " + j);
             Card currCard = deck.get(i);
             Card randomCard = deck.get(j);
             deck.set(i, randomCard);
@@ -494,20 +537,6 @@ public class Stress implements KeyListener {
         return isExecuted;
     }
 
-    public void stackCards(ArrayList<Card> movingStack, ArrayList<Card> mainStack) { // lets not implement this
-        // transfer the ALL cards from moving stack to back of main stack
-        // if the back of moving stack is same as back of main stack
-        int movingStackSize = movingStack.size();
-        int mainStackSize = mainStack.size();
-        if (movingStack.get(movingStackSize - 1) == mainStack.get(mainStackSize - 1)) {
-            mainStack.addAll(movingStack);
-            movingStack.clear();
-
-            // moved row is replaced immediately from the back of the drawpile
-            movingStack.add(0, playerDrawPile.remove(playerDrawPile.size() - 1));
-        }
-    }
-
     public void callStress(int player) {
 
         // if the value of the last cards in pileA and pileB are equal, then stress can
@@ -597,5 +626,39 @@ public class Stress implements KeyListener {
         } else {
             return 3;
         }
+    }
+
+    public boolean canStack(ArrayList<Card> stack1, ArrayList<Card> stack2){
+        Card card1 = stack1.get(0);
+        Card card2 = stack2.get(0);
+        
+        if (card1.getValue() == card2.getValue()){
+            return true;
+        }
+        return false;
+    }
+
+    public void stackCards(ArrayList<ArrayList<Card>> playerRow, int stack1, int stack2){
+        // takes in the player row as the parameter, whether it is the AI or the player 
+        // int stack1 and stack2 refers to the stack number in front of the player.
+        ArrayList<Card> firstStack = playerRow.get(stack1 - 1);
+        ArrayList<Card> secondStack = playerRow.get(stack2 - 1);
+
+        // check if the 2 stacks actually can stack
+        if (canStack(firstStack, secondStack)){
+            firstStack.addAll(secondStack);
+            secondStack.clear();
+            System.out.println("Stacked the 2 piles");
+
+            // if the draw pile is empty, immediately add the next card from the draw pile to the second stack.
+            if (playerDrawPile.size() != 0) {
+                secondStack.add(0, playerDrawPile.remove(playerDrawPile.size() - 1));
+            } 
+        } else {    
+            System.out.println("Cannot stack these 2 piles");
+        }
+
+        
+
     }
 }
