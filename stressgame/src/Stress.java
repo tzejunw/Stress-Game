@@ -50,37 +50,35 @@ public class Stress implements KeyListener {
             }
 
             // stackCard calls
-
-           
             if (pressedKeys1.contains(KeyEvent.VK_A) && pressedKeys1.contains(KeyEvent.VK_S)) {
                 // 1,2
                 System.out.println("A + S was detected by the listener");
-                stackCards(playerRow, 1, 2);
+                stackCards(playerRow, 1, 2, playerDrawPile);
             }
             if (pressedKeys1.contains(KeyEvent.VK_A) && pressedKeys1.contains(KeyEvent.VK_D)) {
                 // 1,3
                 System.out.println("A + D was detected by the listener");
-                stackCards(playerRow, 1, 3);
+                stackCards(playerRow, 1, 3, playerDrawPile);
             }
             if (pressedKeys1.contains(KeyEvent.VK_A) && pressedKeys1.contains(KeyEvent.VK_F)) {
                 // 1,4
                 System.out.println("A + F was detected by the listener");
-                stackCards(playerRow, 1, 4);
+                stackCards(playerRow, 1, 4, playerDrawPile);
             }
             if (pressedKeys1.contains(KeyEvent.VK_S) && pressedKeys1.contains(KeyEvent.VK_D)) {
                 // 2,3
                 System.out.println("S + D was detected by the listener");
-                stackCards(playerRow, 2, 3);
+                stackCards(playerRow, 2, 3, playerDrawPile);
             }
             if (pressedKeys1.contains(KeyEvent.VK_S) && pressedKeys1.contains(KeyEvent.VK_F)) {
                 // 2,4
                 System.out.println("S + F was detected by the listener");
-                stackCards(playerRow, 2, 4);
+                stackCards(playerRow, 2, 4, playerDrawPile);
             }
             if (pressedKeys1.contains(KeyEvent.VK_D) && pressedKeys1.contains(KeyEvent.VK_F)) {
                 // 3,4
                 System.out.println("D + F was detected by the listener");
-                stackCards(playerRow, 3, 4);
+                stackCards(playerRow, 3, 4, playerDrawPile);
             }
 
             // playCard calls
@@ -306,6 +304,7 @@ public class Stress implements KeyListener {
         Timer timer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                stressObject.aiStackCardAttempt();
                 stressObject.aiPlayGameTurn(); // Option 1 (using object reference)
                 gamePanel.repaint();
                 System.out.println("AI Action Performed");
@@ -314,9 +313,9 @@ public class Stress implements KeyListener {
             }
         });
         timer.start();
-
         
-        System.out.println("GAME PANEL WAS ADDED TO THE FRAME, repaint and paintcomponent");
+        
+        System.out.println("GAME PANEL WAS ADDED TO THE FRAME");
     }
 
     public void startGame() {
@@ -481,12 +480,18 @@ public class Stress implements KeyListener {
     public void flipOnPiles() {
         // just add last of playerDraw pile to pileA, aiDrawPile to pileB
         // if player drawpile is empty, both come from aiDrawpile, vice versa
+        // what if both are empty? then flip on piles doesnt work and its truly deadlocked
+        // should flip from the front of each the pile arraylist
 
-        if (playerDrawPile.isEmpty()) {
+        if (playerDrawPile.isEmpty() && aiDrawPile.isEmpty()) {
+            System.out.println("both draw piles empty");
+            pileA.add(pileA.remove(0));
+            pileB.add(pileB.remove(0));
+        } else if (playerDrawPile.isEmpty() && !aiDrawPile.isEmpty()) {
             pileA.add(aiDrawPile.remove(aiDrawPile.size() - 1));
             pileB.add(aiDrawPile.remove(aiDrawPile.size() - 1));
 
-        } else if (aiDrawPile.isEmpty()) {
+        } else if (aiDrawPile.isEmpty() && !playerDrawPile.isEmpty()) {
             pileA.add(playerDrawPile.remove(playerDrawPile.size() - 1));
             pileB.add(playerDrawPile.remove(playerDrawPile.size() - 1));
         } else {
@@ -599,14 +604,34 @@ public class Stress implements KeyListener {
         if (!cardPlayed) {
             cardPlayed = playCard(aiRow, 3, pileB, aiDrawPile);
         }
-        // playCard(aiRow, 0, pileA, aiDrawPile);
-        // playCard(aiRow, 1, pileA, aiDrawPile);
-        // playCard(aiRow, 2, pileA, aiDrawPile);
-        // playCard(aiRow, 3, pileA, aiDrawPile);
-        // playCard(aiRow, 0, pileB, aiDrawPile);
-        // playCard(aiRow, 1, pileB, aiDrawPile);
-        // playCard(aiRow, 2, pileB, aiDrawPile);
-        // playCard(aiRow, 3, pileB, aiDrawPile);
+        if (cardPlayed) {
+            System.out.println("AI has played a card");
+        }
+    }
+
+    public void aiStackCardAttempt() {
+        boolean cardStacked = false;
+        if (!cardStacked) {
+            cardStacked = stackCards(aiRow, 1,2, aiDrawPile);
+        }
+        if (!cardStacked) {
+            cardStacked = stackCards(aiRow, 1,3, aiDrawPile);
+        }
+        if (!cardStacked) {
+            cardStacked = stackCards(aiRow, 1,4, aiDrawPile);
+        }
+        if (!cardStacked) {
+            cardStacked = stackCards(aiRow, 2,3, aiDrawPile);
+        }
+        if (!cardStacked) {
+            cardStacked = stackCards(aiRow, 2,4, aiDrawPile);
+        }
+        if (!cardStacked) {
+            cardStacked = stackCards(aiRow, 3,4, aiDrawPile);
+        }
+        if (cardStacked) {
+            System.out.println("AI has performed stacking");
+        }
     }
 
     public int checkWin() {
@@ -629,16 +654,19 @@ public class Stress implements KeyListener {
     }
 
     public boolean canStack(ArrayList<Card> stack1, ArrayList<Card> stack2){
-        Card card1 = stack1.get(0);
-        Card card2 = stack2.get(0);
-        
-        if (card1.getValue() == card2.getValue()){
-            return true;
+        if (!stack1.isEmpty() && !stack2.isEmpty()) {
+            Card card1 = stack1.get(0);
+            Card card2 = stack2.get(0);
+            
+            if (card1.getValue() == card2.getValue()){
+                return true;
+            }
         }
+
         return false;
     }
 
-    public void stackCards(ArrayList<ArrayList<Card>> playerRow, int stack1, int stack2){
+    public boolean stackCards(ArrayList<ArrayList<Card>> playerRow, int stack1, int stack2, ArrayList<Card> drawPile){
         // takes in the player row as the parameter, whether it is the AI or the player 
         // int stack1 and stack2 refers to the stack number in front of the player.
         ArrayList<Card> firstStack = playerRow.get(stack1 - 1);
@@ -650,12 +678,14 @@ public class Stress implements KeyListener {
             secondStack.clear();
             System.out.println("Stacked the 2 piles");
 
-            // if the draw pile is empty, immediately add the next card from the draw pile to the second stack.
-            if (playerDrawPile.size() != 0) {
-                secondStack.add(0, playerDrawPile.remove(playerDrawPile.size() - 1));
+            // if the draw pile is NOT empty, immediately add the next card from the draw pile to the second stack.
+            if (drawPile.size() != 0) {
+                secondStack.add(0, drawPile.remove(drawPile.size() - 1));
             } 
+            return true;
         } else {    
             System.out.println("Cannot stack these 2 piles");
+            return false;
         }
 
         
