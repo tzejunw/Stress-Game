@@ -1,12 +1,17 @@
-
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.*;
 
+// for music/sfx
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.Timer;
 
 public class Stress implements KeyListener {
+    Sound sound = new Sound();
 
     Set<Integer> pressedKeys1 = new HashSet<>();
     Set<Integer> pressedKeys2 = new HashSet<>();
@@ -288,6 +293,7 @@ public class Stress implements KeyListener {
 
     Stress() {
         startGame();
+
         frame.addKeyListener(this);
         frame.setVisible(true);
         frame.setSize(boardWidth, boardHeight);
@@ -324,6 +330,7 @@ public class Stress implements KeyListener {
         // initalise pile A and pile B from each of the player's draw pile's
         buildDeck();
         shuffleDeck();
+        sound.playMusic();
 
         // player
         playerRow = new ArrayList<>();
@@ -687,8 +694,5 @@ public class Stress implements KeyListener {
             System.out.println("Cannot stack these 2 piles");
             return false;
         }
-
-        
-
     }
 }
