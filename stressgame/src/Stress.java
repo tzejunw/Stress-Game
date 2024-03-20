@@ -330,7 +330,6 @@ public class Stress implements KeyListener {
         // initalise pile A and pile B from each of the player's draw pile's
         buildDeck();
         shuffleDeck();
-        sound.playMusic();
 
         // player
         playerRow = new ArrayList<>();
