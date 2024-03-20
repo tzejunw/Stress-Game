@@ -1,35 +1,43 @@
-// for playing music/sfx
-import java.io.File;
-import javax.sound.sampled.*;
-import javax.swing.JOptionPane;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.net.URL;
 
 public class Sound {
-    public static void main(String[] args) {
-        playMusic();
-        
-    }
-    
-    public static void playMusic() {
-        try {
-               
-            File musicPath = new File("./sounds/StressBGM.wav");
-    
-            if (musicPath.exists()) {
-                System.out.println("playing music");
-                // create input stream with music we want to play
-                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-                Clip clip = AudioSystem.getClip(); // think of Clip as a CD player object
-                clip.open(audioInput);
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-                clip.start();
+    Clip clip;
+    URL soundURL[] = new URL[30];
 
-            } else {
-                System.out.println("Can't find file");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
+    public Sound() {
+        soundURL[0] = getClass().getResource("/music/bgm.wav");
+        soundURL[1] = getClass().getResource("/music/selectsound.wav");
+        soundURL[2] = getClass().getResource("/music/swapcard.wav");
+        // can add more music
+    }
+
+    // opens audio file
+    public void setFile(int i) {
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
+            clip = AudioSystem.getClip();
+            clip.open(ais);
+        } catch(Exception e) {
+            e.printStackTrace();
         }
     }
-}
 
+    // plays sound file
+    public void playMusic() {
+        clip.start();
+    }
+
+    // to loop bgm
+    public void loop() {
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    // to stop playing bgm (for mute button)
+    public void stop() {
+        clip.stop();
+    }
+}
 
