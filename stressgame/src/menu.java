@@ -14,12 +14,16 @@ import java.awt.FlowLayout;
 
 public class menu extends JFrame implements ActionListener{
     JButton newGame,guide,setting,exit;
+    Sound sound;
+
     menu() {
         // label
         // ImageIcon MLogo=new ImageIcon("resource/temp_Mlogo.jpg");
         // JLabel mLogo=new JLabel(MLogo);
 
         //Border border=BorderFactory.createLineBorder(Color.BLUE,2);
+
+        sound = new Sound();
 
         JLabel title = new JLabel();
         title.setText("STRESS");
@@ -87,24 +91,46 @@ public class menu extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent click){
         if(click.getSource()==newGame){
+            playSE(1);
             System.out.println("Clicked on newGame");
             //direct to stress page
             new Stress();
+            // play bgm
+            playMusic(0);
             this.dispose();
         }else if(click.getSource()==setting){
+            playSE(1);
             //direct to setting page
             new Setting();
             System.out.println("Clicked on Setting");
             this.dispose();
         }else if(click.getSource()==guide){
+            playSE(1);
             //direct to guide page
             new Guide();
             System.out.println("Clicked on Guide");
             this.dispose();
         }else if(click.getSource()==exit){
+            playSE(1);
             System.out.println("Clicked on Exit");
             System.exit(0); // Terminate the application
         }
+    }
+
+    // BGM and sound effects
+    public void playMusic(int i) {
+        sound.setFile(i);
+        sound.playMusic();
+        sound.loop();
+    }
+
+    public void stopMusic() {
+        sound.stop();
+    }
+
+    public void playSE(int i) {
+        sound.setFile(i);
+        sound.playMusic();
     }
 
 }
