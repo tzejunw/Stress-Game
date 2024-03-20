@@ -11,6 +11,7 @@ public class Sound {
         soundURL[0] = getClass().getResource("/music/bgm.wav");
         soundURL[1] = getClass().getResource("/music/selectsound.wav");
         soundURL[2] = getClass().getResource("/music/swapcard.wav");
+        soundURL[3] = getClass().getResource("/music/MenuBGM.wav");
         // can add more music
     }
 

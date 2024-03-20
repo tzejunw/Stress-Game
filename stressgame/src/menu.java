@@ -25,6 +25,10 @@ public class menu extends JFrame implements ActionListener{
 
         sound = new Sound();
 
+        // for menu BGM
+        playMusic(3);
+        
+
         JLabel title = new JLabel();
         title.setText("STRESS");
         title.setHorizontalTextPosition(JLabel.CENTER);
@@ -91,6 +95,7 @@ public class menu extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent click){
         if(click.getSource()==newGame){
+            stopMusic();
             playSE(1);
             System.out.println("Clicked on newGame");
             //direct to stress page
@@ -99,12 +104,14 @@ public class menu extends JFrame implements ActionListener{
             playMusic(0);
             this.dispose();
         }else if(click.getSource()==setting){
+            stopMusic();
             playSE(1);
             //direct to setting page
             new Setting();
             System.out.println("Clicked on Setting");
             this.dispose();
         }else if(click.getSource()==guide){
+            stopMusic();
             playSE(1);
             //direct to guide page
             new Guide();
@@ -119,9 +126,13 @@ public class menu extends JFrame implements ActionListener{
 
     // BGM and sound effects
     public void playMusic(int i) {
+        // initially currentSound is -1, so that first time playMusic is called, always plays the track
+        // the below code checks if i is a different track, then it will change the music
+        // otherwise, this method will not do anything, and continue with the same track being played
         sound.setFile(i);
         sound.playMusic();
         sound.loop();
+        
     }
 
     public void stopMusic() {
