@@ -194,6 +194,7 @@ public class Stress implements KeyListener {
                 System.out.println("P + L was detected by the listener");
                 playCard(aiRow, 3, pileB, aiDrawPile);
             }
+            
             gamePanel.repaint();
 
         }
@@ -240,6 +241,8 @@ public class Stress implements KeyListener {
     int Y_OFFSET = cardHeight / 2;
 
     JFrame frame = new JFrame("Stress");
+    JLabel AIDrawPileSizeLabel = new JLabel(); 
+    JLabel playerDrawPileSizeLabel = new JLabel(); 
     JPanel gamePanel = new JPanel() {
         @Override
         public void paintComponent(Graphics g) {
@@ -281,6 +284,25 @@ public class Stress implements KeyListener {
                 Card pileBCard = pileB.get(pileB.size() - 1);
                 Image pileBImg = new ImageIcon(getClass().getResource(pileBCard.getImagePath())).getImage();
                 g.drawImage(pileBImg, 350, 250, cardWidth, cardHeight, null);
+                
+                // indicate the drawPile sizes and the stack sizes. 
+                int aiDrawPileSize = aiDrawPile.size(); 
+
+                AIDrawPileSizeLabel.setText("AI draw pile size is: " + aiDrawPileSize); 
+                AIDrawPileSizeLabel.setFont(new Font("MV Boli", Font.PLAIN, 18));
+ 
+                AIDrawPileSizeLabel.setBounds(120, 140, 400, 100); 
+                 
+ 
+                int playerDrawPileSize = playerDrawPile.size(); 
+        
+                playerDrawPileSizeLabel.setText("Player draw pile size is: " + playerDrawPileSize); 
+                playerDrawPileSizeLabel.setFont(new Font("MV Boli", Font.PLAIN, 18));
+                 
+                playerDrawPileSizeLabel.setBounds(120, 600, 400, 100); 
+ 
+                gamePanel.add(playerDrawPileSizeLabel); 
+                gamePanel.add(AIDrawPileSizeLabel);
 
             } catch (Exception e) {
                 e.printStackTrace();
