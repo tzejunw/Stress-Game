@@ -1,28 +1,40 @@
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.FlowLayout;
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
 
 public class Guide extends JFrame implements ActionListener{
     JButton backBtn;
     Guide() { 
         
         //back
-        backBtn=new JButton("Back");
+        ImageIcon btnImage=new ImageIcon("resource/backBTN.png");
+        backBtn=new JButton(btnImage);
         backBtn.addActionListener(this);
-        JPanel panel=new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(backBtn);
+        backBtn.setContentAreaFilled(false);
+        backBtn.setFocusable(false);
+        backBtn.setBorderPainted(false);
+
+        //panel
+        JPanel middlePanel = new JPanel();
+        JPanel paneltop=new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        paneltop.setBackground(new Color(36,51,56));
+        //paneltop.setBackground(Color.red);
+        middlePanel.setBackground(new Color(36,51,56));
+
+
+        paneltop.setPreferredSize(new Dimension(100, 50));
+        middlePanel.setPreferredSize(new Dimension(100, 100));
+
+
 
         // initialise
         this.setTitle("Stress-Guide");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// cross will exit out of application
-        this.setSize(600, 700);
+        this.setSize(700, 800);
         this.setResizable(false);// prevent user from freely resize the window
+        this.setLocationRelativeTo(null);//keep frame in the middle of screen when generates
+        this.setLayout(new BorderLayout());
         
         
 
@@ -31,7 +43,9 @@ public class Guide extends JFrame implements ActionListener{
         this.setIconImage(logo.getImage());// change icon of frame;
 
         //content pane
-        this.add(panel,BorderLayout.NORTH);
+        paneltop.add(backBtn);
+        this.add(paneltop,BorderLayout.NORTH);
+        this.add(middlePanel,BorderLayout.CENTER);
         
 
         // make frame visible
@@ -49,4 +63,3 @@ public class Guide extends JFrame implements ActionListener{
     }
     
 }
-
