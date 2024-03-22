@@ -1,48 +1,55 @@
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.awt.FlowLayout;
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
 
 public class Setting extends JFrame implements ActionListener {
     JButton backBtn;
-    JComboBox<String> sizeComboBox;
 
     Setting() {
-        // back
-        backBtn = new JButton("Back");
-        backBtn.addActionListener(this);
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(backBtn);
+       //back
+       ImageIcon btnImage=new ImageIcon("resource/backBTN.png");
+       backBtn=new JButton(btnImage);
+       backBtn.addActionListener(this);
+       backBtn.setContentAreaFilled(false);
+       backBtn.setFocusable(false);
+       backBtn.setBorderPainted(false);
 
-        // Combo box for window size options
-        String[] sizes = { "Small", "Original", "Large" };
-        sizeComboBox = new JComboBox<>(sizes);
-        sizeComboBox.addActionListener(this);
+       //panel
+       JPanel middlePanel = new JPanel();
+       JPanel paneltop=new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-        // initialise
-        this.setTitle("Stress-Setting");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// cross will exit out of application
-        this.setSize(600, 700);
-        this.setResizable(false);// prevent user from freely resize the window
+       paneltop.setBackground(new Color(36,51,56));
+       //paneltop.setBackground(Color.red);
+       middlePanel.setBackground(new Color(36,51,56));
 
-        // application-icon
-        ImageIcon logo = new ImageIcon("resource/temp_logo.jpg");// logo of application
-        this.setIconImage(logo.getImage());// change icon of frame;
 
-        // content pane
-        this.add(panel, BorderLayout.NORTH);
-        this.add(sizeComboBox);
+       paneltop.setPreferredSize(new Dimension(100, 50));
+       middlePanel.setPreferredSize(new Dimension(100, 100));
 
-        // make frame visible
-        this.setVisible(true);
 
-        
+
+       // initialise
+       this.setTitle("Stress-Guide");
+       this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// cross will exit out of application
+       this.setSize(700, 800);
+       this.setResizable(false);// prevent user from freely resize the window
+       this.setLocationRelativeTo(null);//keep frame in the middle of screen when generates
+       this.setLayout(new BorderLayout());
+       
+       
+
+       // application-icon
+       ImageIcon logo = new ImageIcon("resource/temp_logo.jpg");// logo of application
+       this.setIconImage(logo.getImage());// change icon of frame;
+
+       //content pane
+       paneltop.add(backBtn);
+       this.add(paneltop,BorderLayout.NORTH);
+       this.add(middlePanel,BorderLayout.CENTER);
+       
+
+       // make frame visible
+       this.setVisible(true);
     }
 
     @Override
@@ -52,24 +59,6 @@ public class Setting extends JFrame implements ActionListener {
             //direct to Main menu page
             new menu();
             this.dispose();
-        }else if(click.getSource()==sizeComboBox){
-            String selectedSize = (String) sizeComboBox.getSelectedItem();
-            switch (selectedSize) {
-                case "Small":
-                    this.setSize(400, 500);
-                    System.out.println("Screen size change to 400*500");
-                    break;
-                case "Original":
-                    this.setSize(600, 700);
-                    System.out.println("Screen size change to 600*700");
-                    break;
-                case "Large":
-                    this.setSize(800, 900);
-                    System.out.println("Screen size change to 800*900");
-                    break;
-                default:
-                    break;
-            }
         }
     }
 
