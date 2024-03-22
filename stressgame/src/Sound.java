@@ -2,32 +2,37 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.net.URL;
+import java.io.*;
 
 public class Sound {
+    // Audio clip object 
     Clip clip;
-    URL soundURL[] = new URL[30];
+    File soundFiles[] = new File[30];
+    
 
     public Sound() {
-        soundURL[0] = getClass().getResource("/music/bgm.wav");
-        soundURL[1] = getClass().getResource("/music/selectsound.wav");
-        soundURL[2] = getClass().getResource("/music/swapcard.wav");
-        soundURL[3] = getClass().getResource("/music/MenuBGM.wav");
+        // getClass().getResource() is used to locate the relative file path of a sound file
+
+        soundFiles[0] = new File("music/bgm.wav");
+        soundFiles[1] = new File("music/selectsound.wav");
+        soundFiles[2] = new File("music/swapcard.wav");
+        soundFiles[3] = new File("music/MenuBGM.wav");
+        soundFiles[4] = new File("music/PlayerCard.wav");
+        soundFiles[5] = new File("music/AICard.wav");
+        
         // can add more music
     }
 
-    // opens audio file
-    public void setFile(int i) {
+    // plays sound file
+    public void playSound(int i) {
         try {
-            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
+            AudioInputStream ais = AudioSystem.getAudioInputStream(soundFiles[i]);
             clip = AudioSystem.getClip();
             clip.open(ais);
         } catch(Exception e) {
             e.printStackTrace();
         }
-    }
 
-    // plays sound file
-    public void playMusic() {
         clip.start();
     }
 
