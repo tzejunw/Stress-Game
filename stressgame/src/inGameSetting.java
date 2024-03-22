@@ -79,19 +79,18 @@ public class inGameSetting extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent click) {
-        if (click.getSource() == guideBtn) {
-            new Guide();
-            System.out.println("Clicked on guide in game");
+        if (click.getSource() == backBtn) {
             this.dispose();
+            System.out.println("Clicked on back,game resume");
         } /*else if (click.getSource() == mainMenuBtn) {
             new menu();
             System.out.println("Clicked on quit game,return back to main menu");
             Window win = SwingUtilities.getWindowAncestor((Component) click.getSource());
             win.dispose();
-
-        } else if (click.getSource() == backBtn) {
+        } else if (click.getSource() == guideBtn) {
+            new Guide();
+            System.out.println("Clicked on guide in game");
             this.dispose();
-            System.out.println("Clicked on back,game resume");
         }*/
     }
 }
