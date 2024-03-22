@@ -83,7 +83,7 @@ public class inGameSetting extends JFrame implements ActionListener {
             new Guide();
             System.out.println("Clicked on guide in game");
             this.dispose();
-        } else if (click.getSource() == mainMenuBtn) {
+        } /*else if (click.getSource() == mainMenuBtn) {
             new menu();
             System.out.println("Clicked on quit game,return back to main menu");
             Window win = SwingUtilities.getWindowAncestor((Component) click.getSource());
@@ -92,6 +92,6 @@ public class inGameSetting extends JFrame implements ActionListener {
         } else if (click.getSource() == backBtn) {
             this.dispose();
             System.out.println("Clicked on back,game resume");
-        }
+        }*/
     }
 }
