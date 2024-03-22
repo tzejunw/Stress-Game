@@ -14,7 +14,7 @@ import java.awt.FlowLayout;
 
 public class menu extends JFrame implements ActionListener{
     JButton newGame,guide,setting,exit;
-    Sound sound;
+    Sound sound = new Sound(); // create a Sound object, so we can call play music methods
 
     menu() {
         // label
@@ -23,10 +23,9 @@ public class menu extends JFrame implements ActionListener{
 
         //Border border=BorderFactory.createLineBorder(Color.BLUE,2);
 
-        sound = new Sound();
-
+       
         // for menu BGM
-        playMusic(3);
+        sound.playSound(3);
         
 
         JLabel title = new JLabel();
@@ -95,53 +94,34 @@ public class menu extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent click){
         if(click.getSource()==newGame){
-            stopMusic();
-            playSE(1);
+            sound.stop();
+            sound.playSound(1);
             System.out.println("Clicked on newGame");
             //direct to stress page
             new Stress();
             // play bgm
-            playMusic(0);
+            sound.playSound(0);
             this.dispose();
         }else if(click.getSource()==setting){
-            stopMusic();
-            playSE(1);
+            sound.stop();
+            sound.playSound(1);
             //direct to setting page
             new Setting();
             System.out.println("Clicked on Setting");
             this.dispose();
         }else if(click.getSource()==guide){
-            stopMusic();
-            playSE(1);
+            sound.stop();
+            sound.playSound(1);
             //direct to guide page
             new Guide();
             System.out.println("Clicked on Guide");
             this.dispose();
         }else if(click.getSource()==exit){
-            playSE(1);
+            sound.playSound(1);;
             System.out.println("Clicked on Exit");
             System.exit(0); // Terminate the application
         }
     }
 
-    // BGM and sound effects
-    public void playMusic(int i) {
-        // initially currentSound is -1, so that first time playMusic is called, always plays the track
-        // the below code checks if i is a different track, then it will change the music
-        // otherwise, this method will not do anything, and continue with the same track being played
-        sound.setFile(i);
-        sound.playMusic();
-        sound.loop();
-        
-    }
-
-    public void stopMusic() {
-        sound.stop();
-    }
-
-    public void playSE(int i) {
-        sound.setFile(i);
-        sound.playMusic();
-    }
-
+   
 }
