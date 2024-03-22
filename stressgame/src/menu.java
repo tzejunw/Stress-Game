@@ -1,127 +1,146 @@
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.border.*;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.FlowLayout;
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
 
-public class menu extends JFrame implements ActionListener{
-    JButton newGame,guide,setting,exit;
+public class menu extends JFrame implements ActionListener {
+    JButton newGame, guide, setting, exit;
     Sound sound = new Sound(); // create a Sound object, so we can call play music methods
+    // Image backgrouImage;
 
     menu() {
-        // label
-        // ImageIcon MLogo=new ImageIcon("resource/temp_Mlogo.jpg");
-        // JLabel mLogo=new JLabel(MLogo);
 
-        //Border border=BorderFactory.createLineBorder(Color.BLUE,2);
-
-       
         // for menu BGM
         sound.playSound(3);
+
+
+        // panel
+        JPanel topPanel = new JPanel();
+        JPanel middlePanel = new JPanel();
+        JPanel bottomPanel = new JPanel();
+        JPanel btnPanel = new JPanel();
+
+        topPanel.setBackground(new Color(36,51,56));
+        middlePanel.setBackground(new Color(36,51,56));
+        bottomPanel.setBackground(new Color(36,51,56));
+        btnPanel.setBackground(new Color(36,51,56));
+
+        topPanel.setPreferredSize(new Dimension(100, 400));
+        middlePanel.setPreferredSize(new Dimension(100, 100));
+        bottomPanel.setPreferredSize(new Dimension(100, 30));
+        btnPanel.setPreferredSize(new Dimension(250, 250));
+
+        ImageIcon titlePic=new ImageIcon("resource/BG2.png");
+        JLabel title = new JLabel(titlePic);
+
+        JLabel watermark = new JLabel();
+        watermark.setText("Project done by G1-T5");
+        watermark.setForeground(Color.gray);
+        watermark.setFont(new Font("Serif", Font.PLAIN, 14));
+
+        // button1
+        newGame = new JButton("New Game");
+        newGame.setFont(new Font("Serif Bold", Font.PLAIN, 20));
+        newGame.setBorderPainted(false);
+        newGame.setBackground(new Color(137,219,220));
+        newGame.setForeground(new Color(135,69,72));
+        newGame.setFocusable(false);
+        newGame.addActionListener(this);
         
 
-        JLabel title = new JLabel();
-        title.setText("STRESS");
-        title.setHorizontalTextPosition(JLabel.CENTER);
-        title.setVerticalTextPosition(JLabel.CENTER);
-        title.setForeground(new Color(0xADD8E6));
-        title.setFont(new Font("Serif Bold",Font.PLAIN,60));
-        //title.setBorder(border);
-        title.setHorizontalAlignment(JLabel.CENTER);
-        title.setVerticalAlignment(JLabel.CENTER);
-        title.setBounds(100, 50, 400, 100); // Adjusted bounds for the title label
-
-        //panel to hold both logo and title
-        // JPanel titleJPanel= new JPanel(new BorderLayout());
-        // titleJPanel.add(mLogo,BorderLayout.NORTH);
-        // titleJPanel.add(title,BorderLayout.CENTER);
-
-        //button1
-        newGame=new JButton("New Game");
-        newGame.setBounds(200,200,100,50);
-        newGame.addActionListener(this);
-        //button2
-        guide=new JButton("Guide");
-        guide.setBounds(200,300,100,50);
+        // button2
+        guide = new JButton("Guide");
+        guide.setFont(new Font("Serif Bold", Font.PLAIN, 20));
+        guide.setBorderPainted(false);
+        guide.setBackground(new Color(137,219,220));
+        guide.setForeground(new Color(135,69,72));
+        guide.setFocusable(false);
         guide.addActionListener(this);
-        //button3
-        setting=new JButton("Setting");
-        setting.setBounds(200,400,100,50);
+
+        // button3
+        setting = new JButton("Setting");
+        setting.setFont(new Font("Serif Bold", Font.PLAIN, 20));
+        setting.setBorderPainted(false);
+        setting.setBackground(new Color(137,219,220));
+        setting.setForeground(new Color(135,69,72));
+        setting.setFocusable(false);
         setting.addActionListener(this);
-        //button4
-        exit=new JButton("Exit");
-        exit.setBounds(200,500,100,50);
+
+        // button4
+        exit = new JButton("Exit");
+        exit.setFont(new Font("Serif Bold", Font.PLAIN, 20));
+        exit.setBorderPainted(false);
+        exit.setBackground(new Color(137,219,220));
+        exit.setForeground(new Color(135,69,72));
+        exit.setFocusable(false);
         exit.addActionListener(this);
 
         // initialise
+        // Toolkit tk=Toolkit.getDefaultToolkit(); //Initializing the Toolkit class.
+        // Dimension screenSize = tk.getScreenSize(); //Get Screen resolution
+
         this.setTitle("Stress");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// cross will exit out of application
-        this.setLayout(null);
-        this.setSize(600, 700);
+        this.setLayout(new BorderLayout());
+        this.setSize(700, 800);
         this.setResizable(false);// prevent user from freely resize the window
+        this.setLocationRelativeTo(null);// keep frame in the middle of screen when generates
+        // this.setBackground(backgrouImage);
 
         // application-icon
         ImageIcon logo = new ImageIcon("resource/temp_logo.jpg");// logo of application
         this.setIconImage(logo.getImage());// change icon of frame;
 
         // content pane
-        this.getContentPane().setBackground(new Color(255,255,255));// change color of backgrond
+        this.getContentPane().setBackground(new Color(255, 255, 255));// change color of backgrond
 
-        this.add(title);
-        this.add(newGame);
-        this.add(guide);
-        this.add(setting);
-        this.add(exit);
+        this.add(topPanel, BorderLayout.NORTH);
+        this.add(middlePanel, BorderLayout.CENTER);
+        this.add(bottomPanel, BorderLayout.SOUTH);
+        btnPanel.setLayout(new GridLayout(4, 1, 0, 20));
 
+        middlePanel.add(btnPanel, BorderLayout.SOUTH);
+
+        btnPanel.add(newGame);
+        btnPanel.add(guide);
+        btnPanel.add(setting);
+        btnPanel.add(exit);
+        topPanel.add(title);
+        bottomPanel.add(watermark);
         // make frame visible
         this.setVisible(true);
     }
 
-    //for testing only
-    // public static void main(String[] args) {
-    //     new menu();
-
-    // }
-
     @Override
-    public void actionPerformed(ActionEvent click){
-        if(click.getSource()==newGame){
+    public void actionPerformed(ActionEvent click) {
+        if (click.getSource() == newGame) {
             sound.stop();
             sound.playSound(1);
             System.out.println("Clicked on newGame");
-            //direct to stress page
+            // direct to stress page
             new Stress();
             // play bgm
             sound.playSound(0);
             this.dispose();
-        }else if(click.getSource()==setting){
+        } else if (click.getSource() == setting) {
             sound.stop();
             sound.playSound(1);
-            //direct to setting page
+            // direct to setting page
             new Setting();
             System.out.println("Clicked on Setting");
             this.dispose();
-        }else if(click.getSource()==guide){
+        } else if (click.getSource() == guide) {
             sound.stop();
             sound.playSound(1);
-            //direct to guide page
+            // direct to guide page
             new Guide();
             System.out.println("Clicked on Guide");
             this.dispose();
-        }else if(click.getSource()==exit){
-            sound.playSound(1);;
+        } else if (click.getSource() == exit) {
+            sound.playSound(1);
+            ;
             System.out.println("Clicked on Exit");
             System.exit(0); // Terminate the application
         }
     }
 
-   
 }
