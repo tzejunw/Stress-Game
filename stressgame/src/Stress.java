@@ -10,11 +10,13 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.Timer;
 
-public class Stress implements KeyListener {
+public class Stress implements KeyListener, ActionListener {
     Sound sound = new Sound();
 
     Set<Integer> pressedKeys1 = new HashSet<>();
     Set<Integer> pressedKeys2 = new HashSet<>();
+
+    JButton setBtn, guideBtn, mainMenuBtn;
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -101,7 +103,6 @@ public class Stress implements KeyListener {
                 System.out.println("A + E was detected by the listener");
                 playCard(playerRow, 0, pileB, playerDrawPile, true);
 
-                
             }
             if (pressedKeys1.contains(KeyEvent.VK_S) && pressedKeys1.contains(KeyEvent.VK_W)) {
                 // Action for S + W combination
@@ -197,7 +198,7 @@ public class Stress implements KeyListener {
                 System.out.println("P + L was detected by the listener");
                 playCard(aiRow, 3, pileB, aiDrawPile, false);
             }
-            
+
             gamePanel.repaint();
 
         }
@@ -233,8 +234,8 @@ public class Stress implements KeyListener {
     ArrayList<Card> pileB;
 
     // Window Size
-    int boardWidth = 600;
-    int boardHeight = 700;
+    int boardWidth = 700;
+    int boardHeight = 800;
 
     // Size of cards
     int cardWidth = 110;
@@ -244,8 +245,8 @@ public class Stress implements KeyListener {
     int Y_OFFSET = cardHeight / 2;
 
     JFrame frame = new JFrame("Stress");
-    JLabel AIDrawPileSizeLabel = new JLabel(); 
-    JLabel playerDrawPileSizeLabel = new JLabel(); 
+    JLabel AIDrawPileSizeLabel = new JLabel();
+    JLabel playerDrawPileSizeLabel = new JLabel();
     JPanel gamePanel = new JPanel() {
         @Override
         public void paintComponent(Graphics g) {
@@ -274,7 +275,7 @@ public class Stress implements KeyListener {
                         Card card = aiRow.get(i).get(0);
                         // used to get the relevant card image
                         Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
-                        // Draw the card image 
+                        // Draw the card image
                         g.drawImage(cardImg, 75 + (cardWidth + 5) * i, 20, cardWidth, cardHeight, null);
                     }
                 }
@@ -287,24 +288,25 @@ public class Stress implements KeyListener {
                 Card pileBCard = pileB.get(pileB.size() - 1);
                 Image pileBImg = new ImageIcon(getClass().getResource(pileBCard.getImagePath())).getImage();
                 g.drawImage(pileBImg, 350, 250, cardWidth, cardHeight, null);
-                
-                // indicate the drawPile sizes and the stack sizes. 
-                int aiDrawPileSize = aiDrawPile.size(); 
 
-                AIDrawPileSizeLabel.setText("AI draw pile size is: " + aiDrawPileSize); 
+                // indicate the drawPile sizes and the stack sizes.
+                int aiDrawPileSize = aiDrawPile.size();
+
+                AIDrawPileSizeLabel.setText("AI draw pile size is: " + aiDrawPileSize);
                 AIDrawPileSizeLabel.setFont(new Font("MV Boli", Font.PLAIN, 18));
- 
-                AIDrawPileSizeLabel.setBounds(120, 140, 400, 100); 
-                 
- 
-                int playerDrawPileSize = playerDrawPile.size(); 
-        
-                playerDrawPileSizeLabel.setText("Player draw pile size is: " + playerDrawPileSize); 
+                AIDrawPileSizeLabel.setForeground(new Color(201, 88, 93));
+
+                AIDrawPileSizeLabel.setBounds(120, 140, 400, 100);
+
+                int playerDrawPileSize = playerDrawPile.size();
+
+                playerDrawPileSizeLabel.setText("Player draw pile size is: " + playerDrawPileSize);
                 playerDrawPileSizeLabel.setFont(new Font("MV Boli", Font.PLAIN, 18));
-                 
-                playerDrawPileSizeLabel.setBounds(120, 600, 400, 100); 
- 
-                gamePanel.add(playerDrawPileSizeLabel); 
+                playerDrawPileSizeLabel.setForeground(new Color(201, 88, 93));
+
+                playerDrawPileSizeLabel.setBounds(120, 600, 400, 100);
+
+                gamePanel.add(playerDrawPileSizeLabel);
                 gamePanel.add(AIDrawPileSizeLabel);
 
             } catch (Exception e) {
@@ -327,9 +329,28 @@ public class Stress implements KeyListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         gamePanel.setLayout(new BorderLayout());
-        gamePanel.setBackground(new Color(53, 101, 77));
+        gamePanel.setBackground(new Color(137, 219, 220));
         frame.add(gamePanel);
         gamePanel.repaint();
+
+        // add in setting panel
+        JPanel settingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        settingPanel.setBackground(new Color(137, 219, 220));
+        settingPanel.setPreferredSize(new Dimension(100, 60));
+
+        ImageIcon btnImage = new ImageIcon("resource/inGameSetting.png");
+        setBtn = new JButton(btnImage);
+        setBtn.addActionListener(this);
+        setBtn.setContentAreaFilled(false);
+        setBtn.setFocusable(false);
+        setBtn.setBorderPainted(false);
+
+        settingPanel.add(setBtn);
+        gamePanel.add(settingPanel, BorderLayout.SOUTH);
+
+        // application-icon
+        ImageIcon logo = new ImageIcon("resource/temp_logo.jpg");// logo of application
+        frame.setIconImage(logo.getImage());// change icon of frame;
 
         Stress stressObject = this;
         Timer timer = new Timer(5000, new ActionListener() {
@@ -344,9 +365,19 @@ public class Stress implements KeyListener {
             }
         });
         timer.start();
-        
-        
+
         System.out.println("GAME PANEL WAS ADDED TO THE FRAME");
+
+        // click action on in game setting
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent click) {
+        if (click.getSource() == setBtn) {
+            new inGameSetting();
+
+        }
     }
 
     public void startGame() {
@@ -511,7 +542,8 @@ public class Stress implements KeyListener {
     public void flipOnPiles() {
         // just add last of playerDraw pile to pileA, aiDrawPile to pileB
         // if player drawpile is empty, both come from aiDrawpile, vice versa
-        // what if both are empty? then flip on piles doesnt work and its truly deadlocked
+        // what if both are empty? then flip on piles doesnt work and its truly
+        // deadlocked
         // should flip from the front of each the pile arraylist
 
         if (playerDrawPile.isEmpty() && aiDrawPile.isEmpty()) {
@@ -547,12 +579,14 @@ public class Stress implements KeyListener {
 
         int pile_value = pile.get(pile.size() - 1).getValue(); // get the value of pile A/B
         int stack_size = playerRow.get(rowPosition).size(); // get size of 1 of the 4 stacks (determined by rowPosition)
-        int stack_value = playerRow.get(rowPosition).get(stack_size - 1).getValue(); // get the value of the last card in the specified stack
+        int stack_value = playerRow.get(rowPosition).get(stack_size - 1).getValue(); // get the value of the last card
+                                                                                     // in the specified stack
 
         if (stack_value == (pile_value + 1) || stack_value == (pile_value - 1) ||
                 (stack_value == 14 && pile_value == 2) || (stack_value == 2 && pile_value == 14)) {
-                // if the stack_value meets the above conditions, add it to the pile (below code)
-            
+            // if the stack_value meets the above conditions, add it to the pile (below
+            // code)
+
             // play sound fx depending on player 1 or player 2 (AI)
 
             if (isPlayerOne == true) {
@@ -560,13 +594,9 @@ public class Stress implements KeyListener {
             } else {
                 sound.playSound(5);
             }
-            
 
             pile.add(playerRow.get(rowPosition).remove(stack_size - 1));
             isExecuted = true;
-
-            
-            
 
             // if stack is empty, and if theres still cards in drawpile,
             // played card is replaced immediately from the BACK of the drawpile.
@@ -613,7 +643,8 @@ public class Stress implements KeyListener {
     }
 
     public boolean canCallStress() {
-        return pileA.size() > 0 && pileB.size() > 0 && pileA.get(pileA.size() - 1).getValue() == pileB.get(pileB.size() - 1).getValue();
+        return pileA.size() > 0 && pileB.size() > 0
+                && pileA.get(pileA.size() - 1).getValue() == pileB.get(pileB.size() - 1).getValue();
     }
 
     public void aiPlayGameTurn() {
@@ -655,22 +686,22 @@ public class Stress implements KeyListener {
     public void aiStackCardAttempt() {
         boolean cardStacked = false;
         if (!cardStacked) {
-            cardStacked = stackCards(aiRow, 1,2, aiDrawPile);
+            cardStacked = stackCards(aiRow, 1, 2, aiDrawPile);
         }
         if (!cardStacked) {
-            cardStacked = stackCards(aiRow, 1,3, aiDrawPile);
+            cardStacked = stackCards(aiRow, 1, 3, aiDrawPile);
         }
         if (!cardStacked) {
-            cardStacked = stackCards(aiRow, 1,4, aiDrawPile);
+            cardStacked = stackCards(aiRow, 1, 4, aiDrawPile);
         }
         if (!cardStacked) {
-            cardStacked = stackCards(aiRow, 2,3, aiDrawPile);
+            cardStacked = stackCards(aiRow, 2, 3, aiDrawPile);
         }
         if (!cardStacked) {
-            cardStacked = stackCards(aiRow, 2,4, aiDrawPile);
+            cardStacked = stackCards(aiRow, 2, 4, aiDrawPile);
         }
         if (!cardStacked) {
-            cardStacked = stackCards(aiRow, 3,4, aiDrawPile);
+            cardStacked = stackCards(aiRow, 3, 4, aiDrawPile);
         }
         if (cardStacked) {
             System.out.println("AI has performed stacking");
@@ -696,12 +727,12 @@ public class Stress implements KeyListener {
         }
     }
 
-    public boolean canStack(ArrayList<Card> stack1, ArrayList<Card> stack2){
+    public boolean canStack(ArrayList<Card> stack1, ArrayList<Card> stack2) {
         if (!stack1.isEmpty() && !stack2.isEmpty()) {
             Card card1 = stack1.get(0);
             Card card2 = stack2.get(0);
-            
-            if (card1.getValue() == card2.getValue()){
+
+            if (card1.getValue() == card2.getValue()) {
                 return true;
             }
         }
@@ -709,24 +740,25 @@ public class Stress implements KeyListener {
         return false;
     }
 
-    public boolean stackCards(ArrayList<ArrayList<Card>> playerRow, int stack1, int stack2, ArrayList<Card> drawPile){
-        // takes in the player row as the parameter, whether it is the AI or the player 
+    public boolean stackCards(ArrayList<ArrayList<Card>> playerRow, int stack1, int stack2, ArrayList<Card> drawPile) {
+        // takes in the player row as the parameter, whether it is the AI or the player
         // int stack1 and stack2 refers to the stack number in front of the player.
         ArrayList<Card> firstStack = playerRow.get(stack1 - 1);
         ArrayList<Card> secondStack = playerRow.get(stack2 - 1);
 
         // check if the 2 stacks actually can stack
-        if (canStack(firstStack, secondStack)){
+        if (canStack(firstStack, secondStack)) {
             firstStack.addAll(secondStack);
             secondStack.clear();
             System.out.println("Stacked the 2 piles");
 
-            // if the draw pile is NOT empty, immediately add the next card from the draw pile to the second stack.
+            // if the draw pile is NOT empty, immediately add the next card from the draw
+            // pile to the second stack.
             if (drawPile.size() != 0) {
                 secondStack.add(0, drawPile.remove(drawPile.size() - 1));
-            } 
+            }
             return true;
-        } else {    
+        } else {
             System.out.println("Cannot stack these 2 piles");
             return false;
         }
