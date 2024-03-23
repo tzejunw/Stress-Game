@@ -50,6 +50,7 @@ public class Stress implements KeyListener, ActionListener {
                 System.out.println("W + E was detected by the listener");
                 callStress(1);
                 if (!isThereValidMove()) {
+                    sound.playSound(6);
                     flipOnPiles();
                     System.out.println("FLIP ON PILES CALLED");
                 }
@@ -238,8 +239,8 @@ public class Stress implements KeyListener, ActionListener {
     int boardHeight = 800;
 
     // Size of cards
-    int cardWidth = 110;
-    int cardHeight = 154;
+    int cardWidth = 120;
+    int cardHeight = 170;
 
     int X_OFFSET = cardWidth / 2;
     int Y_OFFSET = cardHeight / 2;
@@ -253,8 +254,20 @@ public class Stress implements KeyListener, ActionListener {
             super.paintComponent(g);
             try {
                 // Image hiddenCardImg = new
-                // ImageIcon(getClass().getResource("./cards/BACK.png")).getImage();
+                // ImageIcon(getClass().getResource("./cards/BACK.png")).getImage()
                 // g.drawImage(hiddenCardImg, 20, 20, cardWidth, cardHeight, null);
+                // draw/paint aiRow
+                for (int i = 0; i < aiRow.size(); i++) {
+                    if (!(aiRow.get(i).isEmpty())) {
+                        // get the card in the aiRow ArrayList
+                        Card card = aiRow.get(i).get(0);
+                        // used to get the relevant card image
+                        Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
+                        // Draw the card image
+                        // Image img, int x, int y, ImageObserver observer
+                        g.drawImage(cardImg, 80 + (cardWidth + 5) * i, 60, cardWidth, cardHeight, null);
+                    }
+                }
 
                 // draw/paint playerRow (Player's cards)
                 for (int i = 0; i < playerRow.size(); i++) {
@@ -264,48 +277,61 @@ public class Stress implements KeyListener, ActionListener {
                         // used to get the relevant card image
                         Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
                         // Draw the card image
-                        g.drawImage(cardImg, 75 + (cardWidth + 5) * i, 460, cardWidth, cardHeight, null);
+                        // Image img, int x, int y, ImageObserver observer
+                        g.drawImage(cardImg, 80 + (cardWidth + 5) * i, 500, cardWidth, cardHeight, null);
                     }
                 }
 
-                // draw/paint aiRow
-                for (int i = 0; i < aiRow.size(); i++) {
-                    if (!(aiRow.get(i).isEmpty())) {
-                        // get the card in the aiRow ArrayList
-                        Card card = aiRow.get(i).get(0);
-                        // used to get the relevant card image
-                        Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
-                        // Draw the card image
-                        g.drawImage(cardImg, 75 + (cardWidth + 5) * i, 20, cardWidth, cardHeight, null);
-                    }
-                }
+               
+                Image player2Counter = new ImageIcon("resource/Player2Counter.png").getImage();
+                g.drawImage(player2Counter, 602, 103, 55, 60, null);
+
+                Image player1Counter = new ImageIcon("resource/Player1Counter.png").getImage();
+                g.drawImage(player1Counter, 602, 547, 55, 60, null);
+
+                
 
                 // Draw/paint piles. always print the last card in each pile
                 Card pileACard = pileA.get(pileA.size() - 1);
                 Image pileAImg = new ImageIcon(getClass().getResource(pileACard.getImagePath())).getImage();
-                g.drawImage(pileAImg, 150, 250, cardWidth, cardHeight, null);
+                g.drawImage(pileAImg, 165, 270, cardWidth, cardHeight, null);
 
                 Card pileBCard = pileB.get(pileB.size() - 1);
                 Image pileBImg = new ImageIcon(getClass().getResource(pileBCard.getImagePath())).getImage();
-                g.drawImage(pileBImg, 350, 250, cardWidth, cardHeight, null);
+                g.drawImage(pileBImg, 365, 270, cardWidth, cardHeight, null);
 
+
+                
+                // FOR REMAINING CARDS (DRAW PILE)
                 // indicate the drawPile sizes and the stack sizes.
                 int aiDrawPileSize = aiDrawPile.size();
 
-                AIDrawPileSizeLabel.setText("AI draw pile size is: " + aiDrawPileSize);
-                AIDrawPileSizeLabel.setFont(new Font("MV Boli", Font.PLAIN, 18));
-                AIDrawPileSizeLabel.setForeground(new Color(201, 88, 93));
+                if (aiDrawPileSize < 10) {
+                    AIDrawPileSizeLabel.setText("0" + aiDrawPileSize);
+                } else {
+                    AIDrawPileSizeLabel.setText("" + aiDrawPileSize);
+                }
 
-                AIDrawPileSizeLabel.setBounds(120, 140, 400, 100);
+                
+                AIDrawPileSizeLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+                AIDrawPileSizeLabel.setForeground(new Color(0, 0, 0));
+                AIDrawPileSizeLabel.setBounds(618, 95, 400, 100);
+                
 
                 int playerDrawPileSize = playerDrawPile.size();
 
-                playerDrawPileSizeLabel.setText("Player draw pile size is: " + playerDrawPileSize);
-                playerDrawPileSizeLabel.setFont(new Font("MV Boli", Font.PLAIN, 18));
-                playerDrawPileSizeLabel.setForeground(new Color(201, 88, 93));
+                if (playerDrawPileSize < 10) {
+                    playerDrawPileSizeLabel.setText("0" + playerDrawPileSize);
+                } else {
+                    playerDrawPileSizeLabel.setText("" + playerDrawPileSize);
+                }
 
-                playerDrawPileSizeLabel.setBounds(120, 600, 400, 100);
-
+                
+                playerDrawPileSizeLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+                playerDrawPileSizeLabel.setForeground(new Color(0, 0, 0));
+                playerDrawPileSizeLabel.setBounds(618, 540, 400, 100);
+                
+                
                 gamePanel.add(playerDrawPileSizeLabel);
                 gamePanel.add(AIDrawPileSizeLabel);
 
@@ -329,13 +355,16 @@ public class Stress implements KeyListener, ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         gamePanel.setLayout(new BorderLayout());
-        gamePanel.setBackground(new Color(137, 219, 220));
+        gamePanel.setBackground(new Color(53, 101, 77));
         frame.add(gamePanel);
         gamePanel.repaint();
 
+       
+        
+
         // add in setting panel
         JPanel settingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        settingPanel.setBackground(new Color(137, 219, 220));
+        settingPanel.setBackground(new Color(53, 101, 77));
         settingPanel.setPreferredSize(new Dimension(100, 60));
 
         ImageIcon btnImage = new ImageIcon("resource/inGameSetting.png");
@@ -607,9 +636,9 @@ public class Stress implements KeyListener, ActionListener {
             }
         }
         if (checkWin() == 1) {
-            System.out.println("PLAYER 1 is the WINNERR");
+            System.out.println("PLAYER 1 is the WINNER");
         } else if (checkWin() == 2) {
-            System.out.println("PLAYER 2 is the WINNERRR");
+            System.out.println("PLAYER 2 is the WINNER");
         } else {
             System.out.println("No one has won yet");
         }
@@ -635,6 +664,7 @@ public class Stress implements KeyListener, ActionListener {
             pileA.clear();
             pileB.clear();
 
+            sound.playSound(6);
             flipOnPiles();
             System.out.println("STRESS CALLED");
             // after a stress call, the game should auto help to fill in any empty spaces in
