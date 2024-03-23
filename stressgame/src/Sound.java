@@ -19,6 +19,7 @@ public class Sound {
         soundFiles[3] = new File("music/MenuBGM.wav");
         soundFiles[4] = new File("music/PlayerCard.wav");
         soundFiles[5] = new File("music/AICard.wav");
+        soundFiles[6] = new File("music/flipCards.wav");
         
         // can add more music
     }
