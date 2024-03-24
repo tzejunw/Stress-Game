@@ -38,8 +38,16 @@ public class Sound {
     }
 
     // to loop bgm
-    public void loop() {
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    public void playSoundLoop(int i) {
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(soundFiles[i]);
+            clip = AudioSystem.getClip();
+            clip.open(ais);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            clip.start();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // to stop playing bgm (for mute button)
