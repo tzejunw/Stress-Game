@@ -10,7 +10,7 @@ public class menu extends JFrame implements ActionListener {
     menu() {
 
         // for menu BGM
-        sound.playSound(3);
+        sound.playSoundLoop(3);
 
 
         // panel
@@ -119,7 +119,7 @@ public class menu extends JFrame implements ActionListener {
             // direct to stress page
             new Stress();
             // play bgm
-            sound.playSound(0);
+            sound.playSoundLoop(0);
             this.dispose();
         } else if (click.getSource() == setting) {
             sound.stop();
