@@ -16,7 +16,10 @@ public class Stress implements KeyListener, ActionListener {
     Set<Integer> pressedKeys1 = new HashSet<>();
     Set<Integer> pressedKeys2 = new HashSet<>();
 
-    JButton setBtn, guideBtn, mainMenuBtn;
+    JButton setBtn, guideBtn, mainMenuBtn, yesBtn, noBtn, muteBtn;
+    JDialog alert;
+    ImageIcon unmuteImage,muteImage;
+    boolean checkMute;
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -282,14 +285,11 @@ public class Stress implements KeyListener, ActionListener {
                     }
                 }
 
-               
                 Image player2Counter = new ImageIcon("resource/Player2Counter.png").getImage();
                 g.drawImage(player2Counter, 602, 103, 55, 60, null);
 
                 Image player1Counter = new ImageIcon("resource/Player1Counter.png").getImage();
                 g.drawImage(player1Counter, 602, 547, 55, 60, null);
-
-                
 
                 // Draw/paint piles. always print the last card in each pile
                 Card pileACard = pileA.get(pileA.size() - 1);
@@ -300,8 +300,6 @@ public class Stress implements KeyListener, ActionListener {
                 Image pileBImg = new ImageIcon(getClass().getResource(pileBCard.getImagePath())).getImage();
                 g.drawImage(pileBImg, 365, 270, cardWidth, cardHeight, null);
 
-
-                
                 // FOR REMAINING CARDS (DRAW PILE)
                 // indicate the drawPile sizes and the stack sizes.
                 int aiDrawPileSize = aiDrawPile.size();
@@ -312,11 +310,9 @@ public class Stress implements KeyListener, ActionListener {
                     AIDrawPileSizeLabel.setText("" + aiDrawPileSize);
                 }
 
-                
                 AIDrawPileSizeLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
                 AIDrawPileSizeLabel.setForeground(new Color(0, 0, 0));
                 AIDrawPileSizeLabel.setBounds(618, 95, 400, 100);
-                
 
                 int playerDrawPileSize = playerDrawPile.size();
 
@@ -326,12 +322,10 @@ public class Stress implements KeyListener, ActionListener {
                     playerDrawPileSizeLabel.setText("" + playerDrawPileSize);
                 }
 
-                
                 playerDrawPileSizeLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
                 playerDrawPileSizeLabel.setForeground(new Color(0, 0, 0));
                 playerDrawPileSizeLabel.setBounds(618, 540, 400, 100);
-                
-                
+
                 gamePanel.add(playerDrawPileSizeLabel);
                 gamePanel.add(AIDrawPileSizeLabel);
 
@@ -359,23 +353,38 @@ public class Stress implements KeyListener, ActionListener {
         frame.add(gamePanel);
         gamePanel.repaint();
 
-       
-        
-
         // add in setting panel
         JPanel settingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         settingPanel.setBackground(new Color(53, 101, 77));
         settingPanel.setPreferredSize(new Dimension(100, 60));
 
-        ImageIcon btnImage = new ImageIcon("resource/inGameSetting.png");
+        // add in setting panel-2 (top)
+        JPanel settingPanel2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        settingPanel2.setBackground(new Color(53, 101, 77));
+        settingPanel2.setPreferredSize(new Dimension(100, 50));
+
+        // quit button
+        ImageIcon btnImage = new ImageIcon("resource/backBTN.png");
         setBtn = new JButton(btnImage);
         setBtn.addActionListener(this);
         setBtn.setContentAreaFilled(false);
         setBtn.setFocusable(false);
         setBtn.setBorderPainted(false);
 
+        // mute button
+        unmuteImage = new ImageIcon("resource/muetBTN.png");
+        muteImage=new ImageIcon("resource/muteBTNoff.png");
+        muteBtn = new JButton(unmuteImage);
+        muteBtn.addActionListener(this);
+        muteBtn.setContentAreaFilled(false);
+        muteBtn.setFocusable(false);
+        muteBtn.setBorderPainted(false);
+        checkMute=false;//unmute;
+
         settingPanel.add(setBtn);
+        settingPanel2.add(muteBtn);
         gamePanel.add(settingPanel, BorderLayout.SOUTH);
+        gamePanel.add(settingPanel2, BorderLayout.NORTH);
 
         // application-icon
         ImageIcon logo = new ImageIcon("resource/temp_logo.jpg");// logo of application
@@ -404,7 +413,77 @@ public class Stress implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent click) {
         if (click.getSource() == setBtn) {
-            new inGameSetting();
+            // create a dialog Box
+            alert = new JDialog(frame, "Warning");
+            alert.setSize(300, 150);
+
+            JPanel dialogPanelTop = new JPanel();
+            dialogPanelTop.setPreferredSize(new Dimension(100, 50));
+            // dialogPanelTop.setBackground(Color.BLUE);
+
+            JPanel dialogPanelBtm = new JPanel();
+            dialogPanelBtm.setPreferredSize(new Dimension(100, 30));
+            // dialogPanelBtm.setBackground(Color.RED);
+            dialogPanelBtm.setLayout(new GridLayout(1, 2, 5, 5));
+
+            JPanel dialogBase = new JPanel();
+            dialogBase.setPreferredSize(new Dimension(100, 20));
+            // dialogBase.setBackground(Color.GRAY);
+
+            alert.setLayout(new BorderLayout());
+
+            // label
+            JLabel warnText = new JLabel(" Quit game and go back to main menu? ");
+
+            yesBtn = new JButton("Yes");
+            yesBtn.addActionListener(new quitHandler());
+            yesBtn.setFocusable(false);
+            yesBtn.setBorderPainted(false);
+            yesBtn.setBackground(new Color(165, 238, 150));
+
+            noBtn = new JButton("No");
+            noBtn.addActionListener(new quitHandler());
+            noBtn.setFocusable(false);
+            noBtn.setBorderPainted(false);
+            noBtn.setBackground(new Color(238, 150, 150));
+
+            alert.add(dialogPanelTop, BorderLayout.NORTH);
+            alert.add(dialogPanelBtm, BorderLayout.CENTER);
+            alert.add(dialogBase, BorderLayout.SOUTH);
+            dialogPanelTop.add(warnText);
+            dialogPanelBtm.add(yesBtn);
+            dialogPanelBtm.add(noBtn);
+
+            alert.setLocationRelativeTo(frame);
+            alert.setVisible(true);
+
+        }else if(click.getSource()==muteBtn){
+            if(checkMute==false){
+                System.out.println("clicked on muteButton,change to mute");
+                muteBtn.setIcon(muteImage);
+                checkMute=true;
+            }else if(checkMute){
+                System.out.println("clicked on muteButton,change to unmute");
+                muteBtn.setIcon(unmuteImage);
+                checkMute=true;
+            }
+
+            
+
+        }
+    }
+
+    class quitHandler implements ActionListener {
+        public void actionPerformed(ActionEvent click) {
+            if (click.getSource() == yesBtn) {
+                System.out.println("clicked yes");
+                frame.dispose();
+
+            } else if (click.getSource() == noBtn) {
+                System.out.println("clicked no");
+                alert.setVisible(false);
+
+            }
 
         }
     }
