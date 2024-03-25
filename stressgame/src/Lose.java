@@ -4,10 +4,10 @@ import javax.swing.*;
 
 public class Lose extends JFrame implements ActionListener {
     JButton newGame,mainMenu;
+    Sound sound = new Sound();
     Lose(){
 
         // Sound
-        Sound sound = new Sound();
         sound.playSound(8); // can use 9 also        
 
         // panel
