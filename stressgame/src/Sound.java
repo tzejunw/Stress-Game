@@ -20,6 +20,9 @@ public class Sound {
         soundFiles[4] = new File("music/PlayerCard.wav");
         soundFiles[5] = new File("music/AICard.wav");
         soundFiles[6] = new File("music/flipCards.wav");
+        soundFiles[7] = new File("music/winTrumpet.wav");
+        soundFiles[8] = new File("music/lose1.wav");
+        soundFiles[9] = new File("music/loseWhirl.wav");
         
         // can add more music
     }
@@ -52,7 +55,10 @@ public class Sound {
 
     // to stop playing bgm (for mute button)
     public void stop() {
-        clip.stop();
+        if (clip != null && clip.isRunning()) {
+            clip.stop();
+            clip.close();
+        }
     }
 }
 
