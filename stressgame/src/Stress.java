@@ -344,6 +344,9 @@ public class Stress implements KeyListener, ActionListener {
     Stress() {
         startGame();
 
+        // play game bgm
+        sound.playSoundLoop(0);
+
         frame.addKeyListener(this);
         frame.setVisible(true);
         frame.setSize(boardWidth, boardHeight);
@@ -382,7 +385,8 @@ public class Stress implements KeyListener, ActionListener {
         muteBtn.setContentAreaFilled(false);
         muteBtn.setFocusable(false);
         muteBtn.setBorderPainted(false);
-        checkMute=false;//unmute;
+        muteBtn.requestFocus();
+        checkMute=false; //current state is unmute
 
         settingPanel.add(setBtn);
         settingPanel2.add(muteBtn);
@@ -464,19 +468,17 @@ public class Stress implements KeyListener, ActionListener {
             alert.setLocationRelativeTo(frame);
             alert.setVisible(true);
 
-        }else if(click.getSource()==muteBtn){
-            if(checkMute==false){
-                System.out.println("clicked on muteButton,change to mute");
-                muteBtn.setIcon(muteImage);
-                checkMute=true;
-            }else if(checkMute){
-                System.out.println("clicked on muteButton,change to unmute");
+        } else if (click.getSource() == muteBtn) {
+            if (checkMute) { // If sound is currently muted
+                System.out.println("Clicked on muteButton, changing to unmute");
                 muteBtn.setIcon(unmuteImage);
-                checkMute=true;
+                sound.playSoundLoop(0); // Play bgm
+            } else { // If sound is currently unmuted
+                System.out.println("Clicked on muteButton, changing to mute");
+                muteBtn.setIcon(muteImage);
+                sound.stop(); // Stop bgm
             }
-
-            
-
+            checkMute = !checkMute; // toggle muteBtn state
         }
     }
 
@@ -724,10 +726,12 @@ public class Stress implements KeyListener, ActionListener {
 
         if (checkWin() == 1) {
             System.out.println("PLAYER 1 is the WINNER");
+            sound.stop();
             new Win();
             frame.dispose();
         } else if (checkWin() == 2) {
             System.out.println("PLAYER 2 is the WINNER");
+            sound.stop();
             new Lose();
             frame.dispose();
         } else {
