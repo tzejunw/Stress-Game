@@ -6,6 +6,10 @@ public class Lose extends JFrame implements ActionListener {
     JButton newGame,mainMenu;
     Lose(){
 
+        // Sound
+        Sound sound = new Sound();
+        sound.playSound(8); // can use 9 also        
+
         // panel
         JPanel topPanel = new JPanel();
         JPanel middlePanel = new JPanel();
@@ -76,10 +80,14 @@ public class Lose extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent click) {
         if(click.getSource()==mainMenu){
+            sound.stop();
+            sound.playSound(1);
             new menu();
             System.out.println("clicked on mainMenu");
             this.dispose();
         }else if(click.getSource()==newGame){
+            sound.stop();
+            sound.playSound(1);
             new Stress();
             System.out.println("clicked on new game");
             this.dispose();
