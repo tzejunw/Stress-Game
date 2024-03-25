@@ -6,11 +6,15 @@ public class App {
     
 }
 
+// pop up for stress call
+// win loss pop up
+    // kill game frame
+    // create win frame
+    // can choose to terminate win and go create new main menu or create new game from play again
 
-// game / ai moves doesnt stop after win.
+// select ai or 2 player?
 
-// after stress call, the same card comes back. shuffle the drawpile?
 
-// card replacement only occurs when you PLAY a card.
-// when i get stressed and the drawpile is populated, my cards dont refresh. implement automatic or manual replacement?
+// automatic replacement implemented after stress call
+// change flip on piles to take from the front
 
