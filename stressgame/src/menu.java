@@ -96,13 +96,13 @@ public class menu extends JFrame implements ActionListener {
         this.add(topPanel, BorderLayout.NORTH);
         this.add(middlePanel, BorderLayout.CENTER);
         this.add(bottomPanel, BorderLayout.SOUTH);
-        btnPanel.setLayout(new GridLayout(4, 1, 0, 20));
+        btnPanel.setLayout(new GridLayout(3, 1, 0, 30));
 
         middlePanel.add(btnPanel, BorderLayout.SOUTH);
 
         btnPanel.add(newGame);
         btnPanel.add(guide);
-        btnPanel.add(setting);
+        //btnPanel.add(setting);
         btnPanel.add(exit);
         topPanel.add(title);
         bottomPanel.add(watermark);
@@ -121,14 +121,14 @@ public class menu extends JFrame implements ActionListener {
             // play bgm
             sound.playSoundLoop(0);
             this.dispose();
-        } else if (click.getSource() == setting) {
+        } /*else if (click.getSource() == setting) {
             sound.stop();
             sound.playSound(1);
             // direct to setting page
             new Setting();
             System.out.println("Clicked on Setting");
             this.dispose();
-        } else if (click.getSource() == guide) {
+        }*/ else if (click.getSource() == guide) {
             sound.stop();
             sound.playSound(1);
             // direct to guide page
