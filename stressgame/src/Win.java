@@ -6,6 +6,10 @@ public class Win extends JFrame implements ActionListener {
     JButton newGame,mainMenu;
     Win(){
 
+        // Sound
+        Sound sound = new Sound();
+        sound.playSound(7);
+
         // panel
         JPanel topPanel = new JPanel();
         JPanel middlePanel = new JPanel();
