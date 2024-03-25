@@ -157,6 +157,8 @@ public class Stress implements KeyListener, ActionListener {
 
             // FOR PLAYER 2
             // stackCard calls
+
+
             // playCard calls
             if (pressedKeys2.contains(KeyEvent.VK_U) && pressedKeys2.contains(KeyEvent.VK_K)) {
                 // Action for U + K combination
@@ -659,15 +661,15 @@ public class Stress implements KeyListener, ActionListener {
             pileA.add(pileA.remove(0));
             pileB.add(pileB.remove(0));
         } else if (playerDrawPile.isEmpty() && !aiDrawPile.isEmpty()) {
-            pileA.add(aiDrawPile.remove(aiDrawPile.size() - 1));
-            pileB.add(aiDrawPile.remove(aiDrawPile.size() - 1));
+            pileA.add(aiDrawPile.remove(0));
+            pileB.add(aiDrawPile.remove(0));
 
         } else if (aiDrawPile.isEmpty() && !playerDrawPile.isEmpty()) {
-            pileA.add(playerDrawPile.remove(playerDrawPile.size() - 1));
-            pileB.add(playerDrawPile.remove(playerDrawPile.size() - 1));
+            pileA.add(playerDrawPile.remove(0));
+            pileB.add(playerDrawPile.remove(0));
         } else {
-            pileA.add(playerDrawPile.remove(playerDrawPile.size() - 1));
-            pileB.add(aiDrawPile.remove(aiDrawPile.size() - 1));
+            pileA.add(playerDrawPile.remove(0));
+            pileB.add(aiDrawPile.remove(0));
         }
     }
 
@@ -710,7 +712,7 @@ public class Stress implements KeyListener, ActionListener {
             // played card is replaced immediately from the BACK of the drawpile.
             if (playerRow.get(rowPosition).isEmpty()) {
                 if (drawpile.size() != 0) {
-                    playerRow.get(rowPosition).add(0, drawpile.remove(drawpile.size() - 1));
+                    playerRow.get(rowPosition).add(0, drawpile.remove(0));
                 }
             }
         }
@@ -745,9 +747,31 @@ public class Stress implements KeyListener, ActionListener {
 
             sound.playSound(6);
             flipOnPiles();
+
+            // replace any empty spaces in both player rows after a stress call
+            for (int rowPosition = 0 ; rowPosition < 4 ; rowPosition++) {
+                System.out.println("REPLACER STARTED");
+                // for player row
+                if (playerRow.get(rowPosition).isEmpty()) {
+                    System.out.println("FOUND AN EMPTY ROW");
+                    if (playerDrawPile.size() != 0) {
+                        System.out.println("DRAWPILE ISNT EMPTY");
+                        playerRow.get(rowPosition).add(0, playerDrawPile.remove(playerDrawPile.size() - 1));
+                        System.out.println("TRIED REPALCE");
+                    }
+                }
+                // for AI row
+                if (aiRow.get(rowPosition).isEmpty()) {
+                    System.out.println("FOUND AN EMPTY ROW");
+                    if (aiDrawPile.size() != 0) {
+                        System.out.println("DRAWPILE ISNT EMPTY");
+                        aiRow.get(rowPosition).add(0, aiDrawPile.remove(aiDrawPile.size() - 1));
+                        System.out.println("TRIED REPALCE");
+                    }
+                }                
+
+            }
             System.out.println("STRESS CALLED");
-            // after a stress call, the game should auto help to fill in any empty spaces in
-            // the row
         }
     }
 
