@@ -4,10 +4,10 @@ import javax.swing.*;
 
 public class Win extends JFrame implements ActionListener {
     JButton newGame,mainMenu;
+    Sound sound = new Sound();
     Win(){
 
         // Sound
-        Sound sound = new Sound();
         sound.playSound(7);
 
         // panel
