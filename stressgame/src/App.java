@@ -15,8 +15,6 @@ public class App {
 // select ai or 2 player?
 
 
-
-
 // automatic replacement implemented after stress call
 // change flip on piles to take from the front
 

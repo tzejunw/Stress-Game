@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.util.*;
+import java.awt.Window;
 
 // for music/sfx
 import javax.sound.sampled.AudioInputStream;
@@ -393,15 +394,19 @@ public class Stress implements KeyListener, ActionListener {
         frame.setIconImage(logo.getImage());// change icon of frame;
 
         Stress stressObject = this;
+        //boolean keepRunning = true;
         Timer timer = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                stressObject.aiStackCardAttempt();
-                stressObject.aiPlayGameTurn(); // Option 1 (using object reference)
-                gamePanel.repaint();
-                System.out.println("AI Action Performed");
-                // OR
-                // Stress.aiPlayGameTurn(); // Option 2 (if static method)
+                if (checkWin() != 1 && checkWin() != 2) {
+                    stressObject.aiStackCardAttempt();
+                    stressObject.aiPlayGameTurn(); // Option 1 (using object reference)
+                    gamePanel.repaint();
+                    System.out.println("AI Action Performed");
+                    // OR
+                    // Stress.aiPlayGameTurn(); // Option 2 (if static method)
+                }
+
             }
         });
         timer.start();
@@ -709,17 +714,22 @@ public class Stress implements KeyListener, ActionListener {
             isExecuted = true;
 
             // if stack is empty, and if theres still cards in drawpile,
-            // played card is replaced immediately from the BACK of the drawpile.
+            // played card is replaced immediately from the front of the drawpile.
             if (playerRow.get(rowPosition).isEmpty()) {
                 if (drawpile.size() != 0) {
                     playerRow.get(rowPosition).add(0, drawpile.remove(0));
                 }
             }
         }
+
         if (checkWin() == 1) {
             System.out.println("PLAYER 1 is the WINNER");
+            new Win();
+            frame.dispose();
         } else if (checkWin() == 2) {
             System.out.println("PLAYER 2 is the WINNER");
+            new Lose();
+            frame.dispose();
         } else {
             System.out.println("No one has won yet");
         }
