@@ -4,6 +4,9 @@ import javax.swing.*;
 
 public class Guide extends JFrame implements ActionListener{
     JButton backBtn;
+    JLabel imageLabel;
+    Sound sound = new Sound();
+    
     Guide() { 
         
         //play bgm
