@@ -22,6 +22,7 @@ public class Stress implements KeyListener, ActionListener {
     JDialog alert;
     ImageIcon unmuteImage,muteImage;
     boolean checkMute;
+    AiLogicEngine aiLoop;
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -305,7 +306,7 @@ public class Stress implements KeyListener, ActionListener {
         }
     };
 
-    Stress() {
+    Stress(int aiSpeed) {
         startGame();
 
         frame.addKeyListener(this);
@@ -359,22 +360,8 @@ public class Stress implements KeyListener, ActionListener {
         frame.setIconImage(logo.getImage());// change icon of frame;
 
         Stress stressObject = this;
-        //boolean keepRunning = true;
-        Timer timer = new Timer(5000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (checkWin() != 1 && checkWin() != 2) {
-                    stressObject.aiStackCardAttempt();
-                    stressObject.aiPlayGameTurn(); // Option 1 (using object reference)
-                    gamePanel.repaint();
-                    System.out.println("AI Action Performed");
-                    // OR
-                    // Stress.aiPlayGameTurn(); // Option 2 (if static method)
-                }
 
-            }
-        });
-        timer.start();
+        aiLoop = new AiLogicEngine(aiSpeed, stressObject, gamePanel);
 
         System.out.println("GAME PANEL WAS ADDED TO THE FRAME");
 
@@ -469,7 +456,7 @@ public class Stress implements KeyListener, ActionListener {
         // init and fill up the initial player row with 4 cards
         // initalise pile A and pile B from each of the player's draw pile's
         buildDeck();
-        shuffleDeck();
+        //shuffleDeck();
 
         // player
         playerRow = new ArrayList<>();
@@ -645,6 +632,10 @@ public class Stress implements KeyListener, ActionListener {
             pileA.add(playerDrawPile.remove(0));
             pileB.add(aiDrawPile.remove(0));
         }
+
+        if (canCallStress()) {
+            flipOnPiles();
+        }
     }
 
     public boolean playCard(ArrayList<ArrayList<Card>> playerRow, int rowPosition, ArrayList<Card> pile,
@@ -694,11 +685,15 @@ public class Stress implements KeyListener, ActionListener {
         if (checkWin() == 1) {
             System.out.println("PLAYER 1 is the WINNER");
             bgm.stop();
-            new Win();
+            // create Win Screen with this file as picture.
+            aiLoop.stop();
+            new Win("resource/winlose.png");
             frame.dispose();
         } else if (checkWin() == 2) {
             System.out.println("PLAYER 2 is the WINNER");
             bgm.stop();
+            aiLoop.stop();
+            // lose screen no need to specify filename
             new Lose();
             frame.dispose();
         } else {
@@ -762,7 +757,7 @@ public class Stress implements KeyListener, ActionListener {
         gamePanel.setLayout(null);
 
        
-        ImageIcon stressIcon = new ImageIcon("resource/stressCall.png"); 
+        ImageIcon stressIcon = new ImageIcon("resource/stressPic.png"); 
         
         JLabel stressCalledLabel1 = new JLabel();
         stressCalledLabel1.setBounds(40, 275, 150, 150);
