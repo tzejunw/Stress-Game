@@ -4,8 +4,11 @@ import javax.swing.*;
 
 public class Mode extends JFrame implements ActionListener {
     JButton aiBtn,pvpBtn;
+    Sound sound = new Sound();
 
     Mode() {
+        sound.playSoundLoop(3);
+
         //panel
         JPanel topPanel = new JPanel();
         JPanel middlePanel = new JPanel();
@@ -76,10 +79,16 @@ public class Mode extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent click) {
         if (click.getSource() == aiBtn) {
             System.out.println("clicked ai Btn");
+            sound.stop();
+            sound.playSound(1);
             new Stress();
             this.dispose();
         }else if (click.getSource() == pvpBtn) {
             System.out.println("clicked pvp Btn");
+            sound.stop();
+            sound.playSound(1);
+            new StressPVP();
+            this.dispose();
         }
     }
 

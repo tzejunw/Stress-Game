@@ -88,7 +88,7 @@ public class Lose extends JFrame implements ActionListener {
         }else if(click.getSource()==newGame){
             sound.stop();
             sound.playSound(1);
-            new Stress();
+            new Mode();
             System.out.println("clicked on new game");
             this.dispose();
         }

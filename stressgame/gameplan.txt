@@ -1,14 +1,19 @@
+26 March 2024 TODO
 
-print and display game state
-implement keylistener
+1. BGM DOESNT STOP AFTER A WIN, or when it quits via the back button.
 
-implement playCard rules
+2. make appropritate win / lose frames for 2 players
 
-implement stackcard (lets not_) 
 
-make it detect when the draw pile is empty
-if the drawpile is empty, stop replacing the playerRow.
-When the player row is empty, game ends.
+DONE
+back button now goes back to the main menu instead of quitting the whole program
 
-Ai implementation:
-after a repaint, just make it try every possible move 
+Made the "select game mode" screen initalise either an AI game frame or pvp gameframe 
+
+Made it so that the new game button from win / lose screen will prompt us to choose gamemode 
+
+implemented cardstacking for player 2 
+
+IN PVP, changed implementation for fliponpiles, now both players to hold down their stress buttons 
+
+

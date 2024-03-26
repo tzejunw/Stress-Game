@@ -11,7 +11,7 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.Timer;
 
-public class Stress implements KeyListener, ActionListener {
+public class StressPVP implements KeyListener, ActionListener {
     Sound sound = new Sound();
 
     Set<Integer> pressedKeys1 = new HashSet<>();
@@ -44,21 +44,37 @@ public class Stress implements KeyListener, ActionListener {
             pressedKeys2.add(e.getKeyCode());
         }
 
-        if (pressedKeys1.size() == 2) {
-            // Check for desired key combinations based on pressedKeys1
-            System.out.println("THIS IS PRESSED KEYS STORED");
-            System.out.println(pressedKeys1);
-
-            if (pressedKeys1.contains(KeyEvent.VK_W) && pressedKeys1.contains(KeyEvent.VK_E)) {
-                // Action for w + E combination
-                System.out.println("W + E was detected by the listener");
-                callStress(1);
+        // in PVP, BOTH players must hold down their pile buttons to activate flip on piles
+        if (pressedKeys1.size() == 2 && pressedKeys2.size() == 2) {
+            if (pressedKeys1.contains(KeyEvent.VK_W) && pressedKeys1.contains(KeyEvent.VK_E) 
+                && pressedKeys2.contains(KeyEvent.VK_K) && pressedKeys2.contains(KeyEvent.VK_L)) {
+                System.out.println("W + E + K + L was detected by the listener");
                 if (!isThereValidMove()) {
                     sound.playSound(6);
                     flipOnPiles();
                     System.out.println("FLIP ON PILES CALLED");
                 }
-                System.out.println(pileA);
+
+            }
+        }
+
+        if (pressedKeys1.size() == 2) {
+            // Check for desired key combinations based on pressedKeys1
+            System.out.println("THIS IS PRESSED KEYS STORED");
+            System.out.println(pressedKeys1);
+
+            // changed implementation for fliponpiles for 2 players
+            if (pressedKeys1.contains(KeyEvent.VK_W) && pressedKeys1.contains(KeyEvent.VK_E)) {
+                // Action for w + E combination
+                System.out.println("W + E was detected by the listener");
+                callStress(1);
+                // do not call a unilateral fliponpiles
+                // if (!isThereValidMove()) {
+                //     sound.playSound(6);
+                //     //flipOnPiles();
+                //     System.out.println("FLIP ON PILES CALLED");
+                // }
+                // System.out.println(pileA);
             }
 
             // stackCard calls
@@ -152,13 +168,48 @@ public class Stress implements KeyListener, ActionListener {
             if (pressedKeys2.contains(KeyEvent.VK_K) && pressedKeys2.contains(KeyEvent.VK_L)) {
                 // Action for K + L combination
                 System.out.println("K + L was detected by the listener");
-                callStress(1);
-                System.out.println(pileB);
+                callStress(2);
+                // do not call a unilateral flip on piles
+                // if (!isThereValidMove()) {
+                //     sound.playSound(6);
+                //     flipOnPiles();
+                //     System.out.println("FLIP ON PILES CALLED");
+                // }
+                // System.out.println(pileB);
             }
 
             // FOR PLAYER 2
             // stackCard calls
-
+            if (pressedKeys2.contains(KeyEvent.VK_U) && pressedKeys2.contains(KeyEvent.VK_I)) {
+                // 1,2
+                System.out.println("U + I was detected by the listener");
+                stackCards(aiRow, 1, 2, aiDrawPile);
+            }
+            if (pressedKeys2.contains(KeyEvent.VK_U) && pressedKeys2.contains(KeyEvent.VK_O)) {
+                // 1,3
+                System.out.println("U + O was detected by the listener");
+                stackCards(aiRow, 1, 3, aiDrawPile);
+            }
+            if (pressedKeys2.contains(KeyEvent.VK_U) && pressedKeys2.contains(KeyEvent.VK_P)) {
+                // 1,4
+                System.out.println("U + P was detected by the listener");
+                stackCards(aiRow, 1, 4, aiDrawPile);
+            }
+            if (pressedKeys2.contains(KeyEvent.VK_I) && pressedKeys2.contains(KeyEvent.VK_O)) {
+                // 2,3
+                System.out.println("I + O was detected by the listener");
+                stackCards(aiRow, 2, 3, aiDrawPile);
+            }
+            if (pressedKeys2.contains(KeyEvent.VK_I) && pressedKeys2.contains(KeyEvent.VK_P)) {
+                // 2,4
+                System.out.println("I + P was detected by the listener");
+                stackCards(aiRow, 2, 4, aiDrawPile);
+            }
+            if (pressedKeys2.contains(KeyEvent.VK_O) && pressedKeys2.contains(KeyEvent.VK_P)) {
+                // 3,4
+                System.out.println("O + P was detected by the listener");
+                stackCards(aiRow, 3, 4, aiDrawPile);
+            }
 
             // playCard calls
             if (pressedKeys2.contains(KeyEvent.VK_U) && pressedKeys2.contains(KeyEvent.VK_K)) {
@@ -369,7 +420,7 @@ public class Stress implements KeyListener, ActionListener {
         }
     };
 
-    Stress() {
+    StressPVP() {
         startGame();
 
         // play game bgm
@@ -424,24 +475,6 @@ public class Stress implements KeyListener, ActionListener {
         // application-icon
         ImageIcon logo = new ImageIcon("resource/temp_logo.jpg");// logo of application
         frame.setIconImage(logo.getImage());// change icon of frame;
-
-        Stress stressObject = this;
-        //boolean keepRunning = true;
-        Timer timer = new Timer(5000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (checkWin() != 1 && checkWin() != 2) {
-                    stressObject.aiStackCardAttempt();
-                    stressObject.aiPlayGameTurn(); // Option 1 (using object reference)
-                    gamePanel.repaint();
-                    System.out.println("AI Action Performed");
-                    // OR
-                    // Stress.aiPlayGameTurn(); // Option 2 (if static method)
-                }
-
-            }
-        });
-        timer.start();
 
         System.out.println("GAME PANEL WAS ADDED TO THE FRAME");
 
@@ -848,6 +881,7 @@ public class Stress implements KeyListener, ActionListener {
         };
         new javax.swing.Timer(delay, taskPerformer).start();
         
+
         gamePanel.setLayout(new BorderLayout());
 }
 
@@ -974,3 +1008,4 @@ public class Stress implements KeyListener, ActionListener {
         }
     }
 }
+
