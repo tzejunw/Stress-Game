@@ -288,6 +288,34 @@ public class Stress implements KeyListener, ActionListener {
                     }
                 }
 
+                for (int i = 0; i < aiRow.size(); i++) {
+                    if (!(aiRow.get(i).isEmpty())) {
+                        for (int j = 0; j < aiRow.get(i).size(); j++){
+                            // get the card in the aiRow ArrayList
+                        Card card = aiRow.get(i).get(j);
+                        // used to get the relevant card image
+                        Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
+                        // Draw the card image
+                        // Image img, int x, int y, ImageObserver observer
+                        g.drawImage(cardImg, 80 + (cardWidth + 5) * i, 60 + (j * 7), cardWidth, cardHeight, null);
+                        }
+                    }
+                }
+
+                for (int i = 0; i < playerRow.size(); i++) {
+                    if (!(playerRow.get(i).isEmpty())) {
+                        for (int j = 0; j < playerRow.get(i).size(); j++){
+                            // get the card in the aiRow ArrayList
+                        Card card = playerRow.get(i).get(j);
+                        // used to get the relevant card image
+                        Image cardImg = new ImageIcon(getClass().getResource(card.getImagePath())).getImage();
+                        // Draw the card image
+                        // Image img, int x, int y, ImageObserver observer
+                        g.drawImage(cardImg, 80 + (cardWidth + 5) * i, 500 + (j * 7), cardWidth, cardHeight, null);
+                        }
+                    }
+                }
+
                 Image player2Counter = new ImageIcon("resource/Player2Counter.png").getImage();
                 g.drawImage(player2Counter, 602, 103, 55, 60, null);
 
