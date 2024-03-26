@@ -116,8 +116,8 @@ public class menu extends JFrame implements ActionListener {
             sound.stop();
             sound.playSound(1);
             System.out.println("Clicked on newGame");
-            // direct to stress page
-            new Stress();
+            // direct to mode page
+            new Mode();
             this.dispose();
         } /*else if (click.getSource() == setting) {
             sound.stop();
