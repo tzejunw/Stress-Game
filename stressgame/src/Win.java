@@ -5,8 +5,9 @@ import javax.swing.*;
 public class Win extends JFrame implements ActionListener {
     JButton newGame,mainMenu;
     Sound sound = new Sound();
-    Win(){
 
+    String filename;
+    Win(String filename){
         // Sound
         sound.playSound(7);
 
@@ -26,7 +27,7 @@ public class Win extends JFrame implements ActionListener {
         bottomPanel.setPreferredSize(new Dimension(100, 80));
         btnPanel.setPreferredSize(new Dimension(250, 150));
 
-        ImageIcon titlePic=new ImageIcon("resource/winlose.png");
+        ImageIcon titlePic=new ImageIcon(filename);
         JLabel title = new JLabel(titlePic);
 
         // button1

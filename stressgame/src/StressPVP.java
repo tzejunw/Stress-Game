@@ -741,6 +741,10 @@ public class StressPVP implements KeyListener, ActionListener {
             pileA.add(playerDrawPile.remove(0));
             pileB.add(aiDrawPile.remove(0));
         }
+
+        if (canCallStress()) {
+            flipOnPiles();
+        }
     }
 
     public boolean playCard(ArrayList<ArrayList<Card>> playerRow, int rowPosition, ArrayList<Card> pile,
@@ -790,12 +794,14 @@ public class StressPVP implements KeyListener, ActionListener {
         if (checkWin() == 1) {
             System.out.println("PLAYER 1 is the WINNER");
             sound.stop();
-            new Win();
+            // create win screen with winp1
+            new Win("resource/winP1.png");
             frame.dispose();
         } else if (checkWin() == 2) {
             System.out.println("PLAYER 2 is the WINNER");
             sound.stop();
-            new Lose();
+            // create win screen with winP2
+            new Win("resource/winP2.png");
             frame.dispose();
         } else {
             System.out.println("No one has won yet");
@@ -858,7 +864,7 @@ public class StressPVP implements KeyListener, ActionListener {
         gamePanel.setLayout(null);
 
        
-        ImageIcon stressIcon = new ImageIcon("resource/stressCall.png"); 
+        ImageIcon stressIcon = new ImageIcon("resource/stressPic.png"); 
         
         JLabel stressCalledLabel1 = new JLabel();
         stressCalledLabel1.setBounds(40, 275, 150, 150);

@@ -81,7 +81,9 @@ public class Mode extends JFrame implements ActionListener {
             System.out.println("clicked ai Btn");
             sound.stop();
             sound.playSound(1);
-            new Stress();
+            // add difficulty parameter
+            new DifficultySetting();
+            //new Stress();
             this.dispose();
         }else if (click.getSource() == pvpBtn) {
             System.out.println("clicked pvp Btn");

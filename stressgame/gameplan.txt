@@ -1,8 +1,11 @@
 26 March 2024 TODO
 
-1. BGM DOESNT STOP AFTER A WIN, or when it quits via the back button.
+what is the difference between AI and PVP?
 
-2. make appropritate win / lose frames for 2 players
+no ai loop
+no hashset 2
+keylistener event for fliponpiles
+win loss frames
 
 
 DONE
