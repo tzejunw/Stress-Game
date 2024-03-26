@@ -13,6 +13,7 @@ import javax.swing.Timer;
 
 public class StressPVP implements KeyListener, ActionListener {
     Sound sound = new Sound();
+    Sound bgm = new Sound();
 
     Set<Integer> pressedKeys1 = new HashSet<>();
     Set<Integer> pressedKeys2 = new HashSet<>();
@@ -423,9 +424,6 @@ public class StressPVP implements KeyListener, ActionListener {
     StressPVP() {
         startGame();
 
-        // play game bgm
-        sound.playSoundLoop(0);
-
         frame.addKeyListener(this);
         frame.setVisible(true);
         frame.setSize(boardWidth, boardHeight);
@@ -533,11 +531,11 @@ public class StressPVP implements KeyListener, ActionListener {
             if (checkMute) { // If sound is currently muted
                 System.out.println("Clicked on muteButton, changing to unmute");
                 muteBtn.setIcon(unmuteImage);
-                sound.playSoundLoop(0); // Play bgm
+                bgm.playSoundLoop(0); // Play bgm
             } else { // If sound is currently unmuted
                 System.out.println("Clicked on muteButton, changing to mute");
                 muteBtn.setIcon(muteImage);
-                sound.stop(); // Stop bgm
+                bgm.stop(); // Stop bgm
             }
             checkMute = !checkMute; // toggle muteBtn state
         }
@@ -547,7 +545,7 @@ public class StressPVP implements KeyListener, ActionListener {
         public void actionPerformed(ActionEvent click) {
             if (click.getSource() == yesBtn) {
                 System.out.println("clicked yes");
-                sound.stop();
+                bgm.stop();
                 new menu();
                 frame.dispose();
 
@@ -561,6 +559,10 @@ public class StressPVP implements KeyListener, ActionListener {
     }
 
     public void startGame() {
+
+        // play game bgm
+        bgm.playSoundLoop(0);
+        
         // create deck, shuffle it, give each player half the deck.
         // init and fill up the initial player row with 4 cards
         // initalise pile A and pile B from each of the player's draw pile's
@@ -793,13 +795,13 @@ public class StressPVP implements KeyListener, ActionListener {
 
         if (checkWin() == 1) {
             System.out.println("PLAYER 1 is the WINNER");
-            sound.stop();
+            bgm.stop();
             // create win screen with winp1
             new Win("resource/winP1.png");
             frame.dispose();
         } else if (checkWin() == 2) {
             System.out.println("PLAYER 2 is the WINNER");
-            sound.stop();
+            bgm.stop();
             // create win screen with winP2
             new Win("resource/winP2.png");
             frame.dispose();
