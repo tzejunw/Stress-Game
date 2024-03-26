@@ -76,6 +76,7 @@ public class Guide extends JFrame implements ActionListener{
             System.out.println("Clicked on back");
             //direct to Main menu page
             sound.stop();
+            sound.playSound(1);
             new menu();
             this.dispose();
         }
