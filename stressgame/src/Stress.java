@@ -15,7 +15,7 @@ public class Stress implements KeyListener, ActionListener {
     Sound sound = new Sound();
 
     Set<Integer> pressedKeys1 = new HashSet<>();
-    Set<Integer> pressedKeys2 = new HashSet<>();
+    //Set<Integer> pressedKeys2 = new HashSet<>();
 
     JButton setBtn, guideBtn, mainMenuBtn, yesBtn, noBtn, muteBtn;
     JDialog alert;
@@ -34,15 +34,15 @@ public class Stress implements KeyListener, ActionListener {
             pressedKeys1.add(e.getKeyCode());
         }
 
-        if (e.getKeyCode() == KeyEvent.VK_U ||
-                e.getKeyCode() == KeyEvent.VK_I ||
-                e.getKeyCode() == KeyEvent.VK_O ||
-                e.getKeyCode() == KeyEvent.VK_P ||
-                e.getKeyCode() == KeyEvent.VK_K ||
-                e.getKeyCode() == KeyEvent.VK_L) {
+        // if (e.getKeyCode() == KeyEvent.VK_U ||
+        //         e.getKeyCode() == KeyEvent.VK_I ||
+        //         e.getKeyCode() == KeyEvent.VK_O ||
+        //         e.getKeyCode() == KeyEvent.VK_P ||
+        //         e.getKeyCode() == KeyEvent.VK_K ||
+        //         e.getKeyCode() == KeyEvent.VK_L) {
 
-            pressedKeys2.add(e.getKeyCode());
-        }
+        //     pressedKeys2.add(e.getKeyCode());
+        // }
 
         if (pressedKeys1.size() == 2) {
             // Check for desired key combinations based on pressedKeys1
@@ -143,78 +143,13 @@ public class Stress implements KeyListener, ActionListener {
             gamePanel.repaint();
         }
 
-        // HASH SET 2
-        if (pressedKeys2.size() == 2) {
-            // Check for desired key combinations based on pressedKeys1
-            System.out.println("THIS IS PRESSED KEYS STORED");
-            System.out.println(pressedKeys2);
-
-            if (pressedKeys2.contains(KeyEvent.VK_K) && pressedKeys2.contains(KeyEvent.VK_L)) {
-                // Action for K + L combination
-                System.out.println("K + L was detected by the listener");
-                callStress(1);
-                System.out.println(pileB);
-            }
-
-            // FOR PLAYER 2
-            // stackCard calls
-
-
-            // playCard calls
-            if (pressedKeys2.contains(KeyEvent.VK_U) && pressedKeys2.contains(KeyEvent.VK_K)) {
-                // Action for U + K combination
-                System.out.println("U + K was detected by the listener");
-                // NEED TO INSERT VALID MOVE CHECKER
-                // playCard from player row, Pos 0, Pile A
-                playCard(aiRow, 0, pileA, aiDrawPile, false);
-                System.out.println("NEW PILEA");
-                System.out.println(pileA);
-            }
-            if (pressedKeys2.contains(KeyEvent.VK_U) && pressedKeys2.contains(KeyEvent.VK_L)) {
-                // Action for A + E combination
-                System.out.println("U + L was detected by the listener");
-                playCard(aiRow, 0, pileB, aiDrawPile, false);
-            }
-            if (pressedKeys2.contains(KeyEvent.VK_I) && pressedKeys2.contains(KeyEvent.VK_K)) {
-                // Action for S + W combination
-                System.out.println("I + K was detected by the listener");
-                playCard(aiRow, 1, pileA, aiDrawPile, false);
-            }
-            if (pressedKeys2.contains(KeyEvent.VK_I) && pressedKeys2.contains(KeyEvent.VK_L)) {
-                // Action for S + E combination
-                System.out.println("I + L was detected by the listener");
-                playCard(aiRow, 1, pileB, aiDrawPile, false);
-            }
-            if (pressedKeys2.contains(KeyEvent.VK_O) && pressedKeys2.contains(KeyEvent.VK_K)) {
-                // Action for D + W combination
-                System.out.println("O + K was detected by the listener");
-                playCard(aiRow, 2, pileA, aiDrawPile, false);
-            }
-            if (pressedKeys2.contains(KeyEvent.VK_O) && pressedKeys2.contains(KeyEvent.VK_L)) {
-                // Action for D + E combination
-                System.out.println("O + L was detected by the listener");
-                playCard(aiRow, 2, pileB, aiDrawPile, false);
-            }
-            if (pressedKeys2.contains(KeyEvent.VK_P) && pressedKeys2.contains(KeyEvent.VK_K)) {
-                // Action for F + W combination
-                System.out.println("P + K was detected by the listener");
-                playCard(aiRow, 3, pileA, aiDrawPile, false);
-            }
-            if (pressedKeys2.contains(KeyEvent.VK_P) && pressedKeys2.contains(KeyEvent.VK_L)) {
-                // Action for F + E combination
-                System.out.println("P + L was detected by the listener");
-                playCard(aiRow, 3, pileB, aiDrawPile, false);
-            }
-
-            gamePanel.repaint();
-
-        }
     }
+    
 
     @Override
     public void keyReleased(KeyEvent e) {
         pressedKeys1.remove(e.getKeyCode());
-        pressedKeys2.remove(e.getKeyCode());
+        //pressedKeys2.remove(e.getKeyCode());
         // Remove the released key from the combination check
     }
 
