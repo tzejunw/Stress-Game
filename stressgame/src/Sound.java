@@ -23,6 +23,8 @@ public class Sound {
         soundFiles[7] = new File("music/winTrumpet.wav");
         soundFiles[8] = new File("music/lose1.wav");
         soundFiles[9] = new File("music/loseWhirl.wav");
+        soundFiles[10] = new File("music/stressCall.wav");
+
         
         // can add more music
     }
