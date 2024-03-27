@@ -751,7 +751,7 @@ public class Stress implements KeyListener, ActionListener {
         }
     }
 
-    public void callStressImage(){
+        public void callStressImage() {
         System.out.println("STRESS CALLED");
        
         gamePanel.setLayout(null);
@@ -760,21 +760,20 @@ public class Stress implements KeyListener, ActionListener {
         ImageIcon stressIcon = new ImageIcon("resource/stressPic.png"); 
         
         JLabel stressCalledLabel1 = new JLabel();
-        stressCalledLabel1.setBounds(40, 275, 150, 150);
+        stressCalledLabel1.setBounds(40, 275, 500, 400);
         stressCalledLabel1.setIcon(stressIcon);
 
-        JLabel stressCalledLabel2 = new JLabel();
-        stressCalledLabel2.setBounds(502, 275, 150, 150);
-        stressCalledLabel2.setIcon(stressIcon);
+
+        // add sound effect
+        sound.playSound(10);
+      
 
         gamePanel.add(stressCalledLabel1);
-        gamePanel.add(stressCalledLabel2);
 
         int delay = 3000; // milliseconds
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 stressCalledLabel1.setVisible(false);
-                stressCalledLabel2.setVisible(false);
 
             }
         };
