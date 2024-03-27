@@ -435,6 +435,7 @@ public class Stress implements KeyListener, ActionListener {
             if (click.getSource() == yesBtn) {
                 System.out.println("clicked yes");
                 bgm.stop();
+                aiLoop.stop();
                 new menu();
                 frame.dispose();
 
