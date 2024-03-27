@@ -456,7 +456,7 @@ public class Stress implements KeyListener, ActionListener {
         // init and fill up the initial player row with 4 cards
         // initalise pile A and pile B from each of the player's draw pile's
         buildDeck();
-        //shuffleDeck();
+        shuffleDeck();
 
         // player
         playerRow = new ArrayList<>();
