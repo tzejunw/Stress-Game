@@ -35,6 +35,6 @@ public class Card {
         }
 
         public String getImagePath() {
-            return "./src/cards/" + toString() + ".png";
+            return "./images/" + toString() + ".png";
         }    
 }

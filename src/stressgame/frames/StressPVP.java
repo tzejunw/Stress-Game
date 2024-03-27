@@ -363,10 +363,10 @@ public class StressPVP implements KeyListener, ActionListener {
                 Image pileBImg = new ImageIcon(pileBCard.getImagePath()).getImage();
                 g.drawImage(pileBImg, 365, 270, cardWidth, cardHeight, null);
 
-                Image player2Counter = new ImageIcon("src/resource/Player2Counter.png").getImage();
+                Image player2Counter = new ImageIcon("images/Player2Counter.png").getImage();
                 g.drawImage(player2Counter, 602, 103, 55, 60, null);
 
-                Image player1Counter = new ImageIcon("src/resource/Player1Counter.png").getImage();
+                Image player1Counter = new ImageIcon("images/Player1Counter.png").getImage();
                 g.drawImage(player1Counter, 602, 547, 55, 60, null);
 
                 // FOR REMAINING CARDS (DRAW PILE)
@@ -433,7 +433,7 @@ public class StressPVP implements KeyListener, ActionListener {
         settingPanel2.setPreferredSize(new Dimension(100, 50));
 
         // quit button
-        ImageIcon btnImage = new ImageIcon("src/resource/backBTN.png");
+        ImageIcon btnImage = new ImageIcon("images/backBTN.png");
         setBtn = new JButton(btnImage);
         setBtn.addActionListener(this);
         setBtn.setContentAreaFilled(false);
@@ -441,8 +441,8 @@ public class StressPVP implements KeyListener, ActionListener {
         setBtn.setBorderPainted(false);
 
         // mute button
-        unmuteImage = new ImageIcon("src/resource/muetBTN.png");
-        muteImage=new ImageIcon("src/resource/muteBTNoff.png");
+        unmuteImage = new ImageIcon("images/muetBTN.png");
+        muteImage=new ImageIcon("images/muteBTNoff.png");
         muteBtn = new JButton(unmuteImage);
         muteBtn.addActionListener(this);
         muteBtn.setContentAreaFilled(false);
@@ -457,7 +457,7 @@ public class StressPVP implements KeyListener, ActionListener {
         gamePanel.add(settingPanel2, BorderLayout.NORTH);
 
         // application-icon
-        ImageIcon logo = new ImageIcon("src/resource/temp_logo.jpg");// logo of application
+        ImageIcon logo = new ImageIcon("images/temp_logo.jpg");// logo of application
         frame.setIconImage(logo.getImage());// change icon of frame;
 
         System.out.println("GAME PANEL WAS ADDED TO THE FRAME");
@@ -757,13 +757,13 @@ public class StressPVP implements KeyListener, ActionListener {
             System.out.println("PLAYER 1 is the WINNER");
             bgm.stop();
             // create win screen with winp1
-            new Win("src/resource/winP1.png");
+            new Win("images/winP1.png");
             frame.dispose();
         } else if (checkWin() == 2) {
             System.out.println("PLAYER 2 is the WINNER");
             bgm.stop();
             // create win screen with winP2
-            new Win("src/resource/winP2.png");
+            new Win("images/winP2.png");
             frame.dispose();
         } else {
             System.out.println("No one has won yet");
@@ -822,7 +822,7 @@ public class StressPVP implements KeyListener, ActionListener {
        
         gamePanel.setLayout(null);
 
-        ImageIcon stressIcon = new ImageIcon("src/resource/stressPic.png"); 
+        ImageIcon stressIcon = new ImageIcon("images/stressPic.png"); 
         
         JLabel stressCalledLabel1 = new JLabel();
         stressCalledLabel1.setBounds(30, 200, 520, 400);

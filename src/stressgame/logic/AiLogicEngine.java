@@ -13,11 +13,10 @@ public class AiLogicEngine {
         timer = new Timer(speedInMiliSeconds, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                    stressObject.aiStackCardAttempt();
-                    stressObject.aiPlayGameTurn();
-                    gamePanel.repaint();
-                    System.out.println("AI Action Performed");
+                stressObject.aiStackCardAttempt();
+                stressObject.aiPlayGameTurn();
+                gamePanel.repaint();
+                System.out.println("AI Action Performed");
             }
         });
         timer.start();

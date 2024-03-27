@@ -63,7 +63,7 @@ public class Win extends JFrame implements ActionListener {
         // this.setBackground(backgrouImage);
 
         // application-icon
-        ImageIcon logo = new ImageIcon("src/resource/temp_logo.jpg");// logo of application
+        ImageIcon logo = new ImageIcon("images/temp_logo.jpg");// logo of application
         this.setIconImage(logo.getImage());// change icon of frame;
 
         // content pane

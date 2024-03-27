@@ -10,7 +10,7 @@ public class Mode extends JFrame implements ActionListener {
     Sound sound = new Sound();
 
     public Mode() {
-        ImageIcon btnImageBack=new ImageIcon("src/resource/backBTN.png");
+        ImageIcon btnImageBack=new ImageIcon("images/backBTN.png");
         backBtn=new JButton(btnImageBack);
         backBtn.addActionListener(this);
         backBtn.setContentAreaFilled(false);
@@ -33,11 +33,11 @@ public class Mode extends JFrame implements ActionListener {
         bottomPanel.setPreferredSize(new Dimension(100, 30));
         modePanel.setPreferredSize(new Dimension(600, 250));
 
-        ImageIcon titlePic=new ImageIcon("src/resource/bg3.png");
+        ImageIcon titlePic=new ImageIcon("images/bg3.png");
         JLabel title = new JLabel(titlePic);
 
         //button 1
-        ImageIcon btnImage=new ImageIcon("src/resource/aiBtn.png");
+        ImageIcon btnImage=new ImageIcon("images/aiBtn.png");
         aiBtn=new JButton(btnImage);
         aiBtn.addActionListener(this);
         aiBtn.setContentAreaFilled(false);
@@ -45,7 +45,7 @@ public class Mode extends JFrame implements ActionListener {
         aiBtn.setBorderPainted(false);
 
         //button 2
-        ImageIcon btnImage2=new ImageIcon("src/resource/pvpBtn.png");
+        ImageIcon btnImage2=new ImageIcon("images/pvpBtn.png");
         pvpBtn=new JButton(btnImage2);
         pvpBtn.addActionListener(this);
         pvpBtn.setContentAreaFilled(false);
@@ -61,7 +61,7 @@ public class Mode extends JFrame implements ActionListener {
         // this.setBackground(backgrouImage);
 
         // application-icon
-        ImageIcon logo = new ImageIcon("src/resource/temp_logo.jpg");// logo of application
+        ImageIcon logo = new ImageIcon("images/temp_logo.jpg");// logo of application
         this.setIconImage(logo.getImage());// change icon of frame;
 
         // content pane

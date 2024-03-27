@@ -29,7 +29,7 @@ public class Lose extends JFrame implements ActionListener {
         bottomPanel.setPreferredSize(new Dimension(100, 80));
         btnPanel.setPreferredSize(new Dimension(250, 150));
 
-        ImageIcon titlePic=new ImageIcon("src/resource/winlose2.png");
+        ImageIcon titlePic=new ImageIcon("images/winlose2.png");
         JLabel title = new JLabel(titlePic);
 
         // button1
@@ -62,7 +62,7 @@ public class Lose extends JFrame implements ActionListener {
         // this.setBackground(backgrouImage);
 
         // application-icon
-        ImageIcon logo = new ImageIcon("src/resource/temp_logo.jpg");// logo of application
+        ImageIcon logo = new ImageIcon("images/temp_logo.jpg");// logo of application
         this.setIconImage(logo.getImage());// change icon of frame;
 
         // content pane

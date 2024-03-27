@@ -10,7 +10,7 @@ public class DifficultySetting extends JFrame implements ActionListener {
     Sound sound = new Sound();
 
     public DifficultySetting() {
-        ImageIcon btnImageBack=new ImageIcon("src/resource/backBTN.png");
+        ImageIcon btnImageBack=new ImageIcon("images/backBTN.png");
         backBtn=new JButton(btnImageBack);
         backBtn.addActionListener(this);
         backBtn.setContentAreaFilled(false);
@@ -33,11 +33,11 @@ public class DifficultySetting extends JFrame implements ActionListener {
         bottomPanel.setPreferredSize(new Dimension(100, 30));
         modePanel.setPreferredSize(new Dimension(600, 250));
 
-        ImageIcon titlePic=new ImageIcon("src/resource/bg3.png");
+        ImageIcon titlePic=new ImageIcon("images/bg3.png");
         JLabel title = new JLabel(titlePic);
 
         //button 1
-        ImageIcon btnImage=new ImageIcon("src/resource/easy.png");
+        ImageIcon btnImage=new ImageIcon("images/easy.png");
         aiEasy=new JButton(btnImage);
         aiEasy.addActionListener(this);
         aiEasy.setContentAreaFilled(false);
@@ -45,7 +45,7 @@ public class DifficultySetting extends JFrame implements ActionListener {
         aiEasy.setBorderPainted(false);
 
         //button 2
-        ImageIcon btnImage2=new ImageIcon("src/resource/medium.png");
+        ImageIcon btnImage2=new ImageIcon("images/medium.png");
         aiMedium=new JButton(btnImage2);
         aiMedium.addActionListener(this);
         aiMedium.setContentAreaFilled(false);
@@ -53,7 +53,7 @@ public class DifficultySetting extends JFrame implements ActionListener {
         aiMedium.setBorderPainted(false);
 
         //button 3
-        ImageIcon btnImage3=new ImageIcon("src/resource/hard.png");
+        ImageIcon btnImage3=new ImageIcon("images/hard.png");
         aiHard=new JButton(btnImage3);
         aiHard.addActionListener(this);
         aiHard.setContentAreaFilled(false);
@@ -69,7 +69,7 @@ public class DifficultySetting extends JFrame implements ActionListener {
         // this.setBackground(backgrouImage);
 
         // application-icon
-        ImageIcon logo = new ImageIcon("src/resource/temp_logo.jpg");// logo of application
+        ImageIcon logo = new ImageIcon("images/temp_logo.jpg");// logo of application
         this.setIconImage(logo.getImage());// change icon of frame;
 
         // content pane

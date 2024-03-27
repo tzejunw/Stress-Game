@@ -12,7 +12,7 @@ public class Guide extends JFrame implements ActionListener{
     
     public Guide() { 
         //back
-        ImageIcon btnImage=new ImageIcon("src/resource/backBTN.png");
+        ImageIcon btnImage=new ImageIcon("images/backBTN.png");
         backBtn=new JButton(btnImage);
         backBtn.addActionListener(this);
         backBtn.setContentAreaFilled(false);
@@ -20,7 +20,7 @@ public class Guide extends JFrame implements ActionListener{
         backBtn.setBorderPainted(false);
 
         // Load the image
-        ImageIcon imageIcon = new ImageIcon("src/resource/guide.png");
+        ImageIcon imageIcon = new ImageIcon("images/guide.png");
         Image image = imageIcon.getImage();
         Image scaledImage = image.getScaledInstance(700, 750, Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(scaledImage);
@@ -42,7 +42,7 @@ public class Guide extends JFrame implements ActionListener{
         this.setLayout(new BorderLayout());
         
         // application-icon
-        ImageIcon logo = new ImageIcon("src/resource/temp_logo.jpg");// logo of application
+        ImageIcon logo = new ImageIcon("images/temp_logo.jpg");// logo of application
         this.setIconImage(logo.getImage());// change icon of frame;
 
         //content pane

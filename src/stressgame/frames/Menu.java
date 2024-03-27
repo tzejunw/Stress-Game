@@ -30,7 +30,7 @@ public class Menu extends JFrame implements ActionListener {
         bottomPanel.setPreferredSize(new Dimension(100, 30));
         btnPanel.setPreferredSize(new Dimension(250, 250));
 
-        ImageIcon titlePic=new ImageIcon("src/resource/BG2.png");
+        ImageIcon titlePic=new ImageIcon("images/BG2.png");
         JLabel title = new JLabel(titlePic);
 
         JLabel watermark = new JLabel();
@@ -88,7 +88,7 @@ public class Menu extends JFrame implements ActionListener {
         // this.setBackground(backgrouImage);
 
         // application-icon
-        ImageIcon logo = new ImageIcon("src/resource/temp_logo.jpg");// logo of application
+        ImageIcon logo = new ImageIcon("images/temp_logo.jpg");// logo of application
         this.setIconImage(logo.getImage());// change icon of frame;
 
         // content pane
