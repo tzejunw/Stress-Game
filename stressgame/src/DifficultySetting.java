@@ -29,7 +29,7 @@ public class DifficultySetting extends JFrame implements ActionListener {
         JLabel title = new JLabel(titlePic);
 
         //button 1
-        ImageIcon btnImage=new ImageIcon("resource/aiBtn.png");
+        ImageIcon btnImage=new ImageIcon("resource/easy.png");
         aiEasy=new JButton(btnImage);
         aiEasy.addActionListener(this);
         aiEasy.setContentAreaFilled(false);
@@ -37,7 +37,7 @@ public class DifficultySetting extends JFrame implements ActionListener {
         aiEasy.setBorderPainted(false);
 
         //button 2
-        ImageIcon btnImage2=new ImageIcon("resource/aiBtn.png");
+        ImageIcon btnImage2=new ImageIcon("resource/medium.png");
         aiMedium=new JButton(btnImage2);
         aiMedium.addActionListener(this);
         aiMedium.setContentAreaFilled(false);
@@ -45,8 +45,8 @@ public class DifficultySetting extends JFrame implements ActionListener {
         aiMedium.setBorderPainted(false);
 
         //button 3
-        ImageIcon btnImage3=new ImageIcon("resource/aiBtn.png");
-        aiHard=new JButton(btnImage2);
+        ImageIcon btnImage3=new ImageIcon("resource/hard.png");
+        aiHard=new JButton(btnImage3);
         aiHard.addActionListener(this);
         aiHard.setContentAreaFilled(false);
         aiHard.setFocusable(false);
