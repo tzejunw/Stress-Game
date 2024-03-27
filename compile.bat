@@ -1,0 +1,1 @@
+javac -d classes -cp "src:src/*" src/stressgame/App.java
