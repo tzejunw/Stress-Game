@@ -760,7 +760,7 @@ public class Stress implements KeyListener, ActionListener {
         ImageIcon stressIcon = new ImageIcon("resource/stressPic.png"); 
         
         JLabel stressCalledLabel1 = new JLabel();
-        stressCalledLabel1.setBounds(40, 275, 500, 400);
+        stressCalledLabel1.setBounds(30, 200, 520, 400);
         stressCalledLabel1.setIcon(stressIcon);
 
 
