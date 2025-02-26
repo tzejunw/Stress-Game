@@ -1,11 +1,11 @@
 # Stress: The Card Game
---
+
 ![Rules](images/BG2.png)
 
 Welcome to **Stress: The Card Game**. We've implemented a single and multiplayer experience for you, modelled after the original game. Either challenge our AI at three different difficulty levels, or pull an friend to fight! You'll need reflexes, pattern recognition and composure to win in this interactive game where time is of the essence! 
 
 ## **Rules**
----
+
 ### Objectives
 Each player is given half the deck, 26 shuffled cards. **The objective of the game is get rid of your stack**. 
 
@@ -20,14 +20,14 @@ Deadlocks may occur when either player cannot play a card. In single player, res
 
 
 ## **Controls**
----
+
 Refer to these keybinds! Each position on the board is **binded to a keystroke**. To play a card to either pile, press the key of your card and the key of the intended stack **simultaneously**. To call STRESS, press the keys of both piles at once!
 
 ![Rules](images/guide.png)
 
 
 ## **Running Instructions**
----
+
 1. Compile the source files
 
 ```./compile.bat```
