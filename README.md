@@ -30,10 +30,10 @@ Refer to these keybinds! Each position on the board is **binded to a keystroke**
 ---
 1. Compile the source files
 
-'./compile.bat'
+```./compile.bat
 
 2. Run the game
 
-'./run.bat'
+```./run.bat
 
 
