@@ -36,4 +36,10 @@ Refer to these keybinds! Each position on the board is **binded to a keystroke**
 
 ```./run.bat```
 
+Have fun!!
+
+## Contributors
+
+Peter, Hsien Ray, Arthur, Cheryl, Xu Duo
+
 
