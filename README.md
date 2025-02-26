@@ -1,5 +1,5 @@
 # Stress: The Card Game
----
+--
 ![Rules](images/BG2.png)
 
 Welcome to **Stress: The Card Game**. We've implemented a single and multiplayer experience for you, modelled after the original game. Either challenge our AI at three different difficulty levels, or pull an friend to fight! You'll need reflexes, pattern recognition and composure to win in this interactive game where time is of the essence! 
