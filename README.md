@@ -40,6 +40,6 @@ Have fun!!
 
 ## Contributors
 
-Peter, Hsien Ray, Arthur, Cheryl, Xu Duo, Tze Jun
+Tze Jun, Peter, Hsien Ray, Arthur, Cheryl, Xu Duo
 
 
